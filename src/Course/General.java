@@ -11,7 +11,6 @@ public class General extends Course{
     String ExamDay;
     int StartOfExam, EndOfExam;
     ArrayList<Student> students = new ArrayList<>();
-
     public String getCollegeName() {
         return CollegeName;
     }

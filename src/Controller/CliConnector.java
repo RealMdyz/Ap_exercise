@@ -1,20 +1,27 @@
 package Controller;
-import MyProject.MyProject;
+import View.*;
 
 import java.util.Scanner;
 import View.*;
 public class CliConnector {
+
+    public Sttuf sttuf;
+    public CliConnector(Sttuf sttuf){
+        this.sttuf = sttuf;
+    }
     public void init(){
         Scanner scanner = new Scanner(System.in);
+        Student student = new Student();
+        Admin admin = new Admin();
         System.out.println("Enter your username to sign in:");
         String username = scanner.next();
         scanner.nextLine();
         // sign in:
         if (username.equalsIgnoreCase("Student")) {
-
+            student.init();
         }
         else if (username.equalsIgnoreCase("Admin")) {
-
+            admin.init();
         }
         else {
             init();
