@@ -34,16 +34,31 @@ public class Admin {
     public void seecolleges(){
         ArrayList<String> Colleges = new ArrayList<>();
         for(General general : sttuf.getGenerals()){
-            if(!Colleges.contains(general.getCollegeName())){
-                Colleges.add(general.getCollegeName());
-                System.out.println(general.getCollegeName());
+            boolean c = true;
+            for(String s : Colleges){
+                if(s.equals(general.getCollegeName())){
+                    c = false;
+                }
             }
+            if(c)
+                 Colleges.add(general.getCollegeName());
+
         }
         for(Special special : sttuf.getSpecials()){
-            if(!Colleges.contains(special.getCollegeName())){
-                Colleges.add(special.getCollegeName());
-                System.out.println(special.getCollegeName());
+            boolean c = true;
+            for(String s : Colleges){
+                if(s.equals(special.getCollegeName())){
+                    c = false;
+                }
             }
+            if(c)
+                Colleges.add(special.getCollegeName());
+        }
+
+        System.out.println("The College Names is :");
+        for(String s : Colleges){
+            System.out.println(s);
+
         }
         Scanner scanner = new Scanner(System.in);
         System.out.println("Chose your option :\n 0- back \n chose a college name");
@@ -55,26 +70,26 @@ public class Admin {
     }
     public void Keepgoing(String s){
         for(General general : sttuf.getGenerals()){
-            if(general.getCollegeName() == s){
+            if(general.getCollegeName().equals(s)){
                 System.out.println(general.getLessonName() + " " + general.getLessonCode());
             }
         }
         for(Special special : sttuf.getSpecials()){
-            if(special.getCollegeName() == s){
+            if(special.getCollegeName().equals(s)){
                 System.out.println(special.getLessonName() + " " + special.getLessonCode());
             }
         }
         System.out.println("Chose your option :\n 1- add a Lesson to this College\n 2- add Capacity to a lesson\n 3-See Registered Student for adding them or removing them ");
         Scanner scanner = new Scanner(System.in);
-        String p = scanner.next();
-        if(p == "1"){
+        int p = scanner.nextInt();
+        if(p == 1){
             addAlesson(s);
         }
-        else if(p == "2"){
+        else if(p == 2){
             addCapacity();
         }
-        else if(p == "3"){
-
+        else if(p == 3){
+            AddOrRemoveAStudent();
         }
         else {
             init();
@@ -85,7 +100,8 @@ public class Admin {
         Scanner scanner = new Scanner(System.in);
         System.out.println("It is a General Lesson Or Special one?");
         String typeoflesson = scanner.next();
-        if(typeoflesson == "Special"){
+
+        if(typeoflesson.equals("Special")){
             Special special = new Special();
             special.setCollegeName(s);
             System.out.println("Please Enter the Lesson Name");
@@ -123,7 +139,7 @@ public class Admin {
             special.setEndOfExam(EndOfExam);
             sttuf.AddSpecial(special);
         }
-        else if(typeoflesson == "General"){
+        else if(typeoflesson.equals("General")){
             General general = new General();
             general.setCollegeName(s);
             System.out.println("Please Enter the Lesson Name");
@@ -171,19 +187,25 @@ public class Admin {
         System.out.println("How much do you want to add to the capacity?");
         Capacity = scanner.nextInt();
         for(General general : sttuf.getGenerals()){
-            if(general.getLessonCode() == LessonCode){
+            if(general.getLessonCode().equals(LessonCode)){
                 general.setCapacity(general.getCapacity() + Capacity);
                 System.out.println("Done!");
                 init();
             }
         }
         for(Special special : sttuf.getSpecials()){
-            if(special.getLessonCode() == LessonCode){
+            if(special.getLessonCode().equals(LessonCode)){
                 special.setCapacity(special.getCapacity() + Capacity);
                 System.out.println("Done!");
                 init();
             }
         }
         System.out.println("Something Went Wrong");
+        init();
+    }
+    public void AddOrRemoveAStudent(){
+
+
+        init();
     }
 }
