@@ -21,13 +21,14 @@ public class Student {
         Scanner scanner = new Scanner(System.in);
         System.out.println("you have entered as a Student\n what do you want to do:\n 0- back\n 1- remove lesson\n 2- add lesson");
         int choice = scanner.nextInt();
+        CliConnector cliConnector = new CliConnector(sttuf);
         scanner.nextLine();
         if (choice == 1) {
             removelesson();
         } else if (choice == 2) {
             addlesson();
         } else if (choice == 0) {
-
+            cliConnector.init();
         }
         else {
             init();

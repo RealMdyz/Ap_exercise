@@ -6,6 +6,7 @@ import View.*;
 public class CliConnector {
 
     public Sttuf sttuf;
+
     public CliConnector(Sttuf sttuf){
         this.sttuf = sttuf;
     }
