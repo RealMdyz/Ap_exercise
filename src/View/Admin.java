@@ -51,9 +51,34 @@ public class Admin {
         if(s == "0"){
             init();
         }
-
+        Keepgoing(s);
     }
     public void Keepgoing(String s){
-        System.out.println("Chose your option :\n ");
+        for(General general : sttuf.getGenerals()){
+            if(general.getCollegeName() == s){
+                System.out.println(general.getLessonName() + " " + general.getLessonCode());
+            }
+        }
+        for(Special special : sttuf.getSpecials()){
+            if(special.getCollegeName() == s){
+                System.out.println(special.getLessonName() + " " + special.getLessonCode());
+            }
+        }
+        System.out.println("Chose your option :\n 1- add a Lesson to this College\n 2- add Capacity to a lesson\n 3-See Registered Student for adding them or removing them ");
+        Scanner scanner = new Scanner(System.in);
+        String p = scanner.next();
+        if(p == "1"){
+
+        }
+        else if(p == "2"){
+
+        }
+        else if(p == "3"){
+
+        }
+        else {
+            init();
+        }
+
     }
 }
