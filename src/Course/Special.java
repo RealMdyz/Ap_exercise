@@ -11,7 +11,9 @@ public class Special extends Course{
     String ExamDay;
     int StartOfExam, EndOfExam;
     ArrayList<Student> students = new ArrayList<>();
+    public Special(){
 
+    }
     public String getCollegeName() {
         return CollegeName;
     }

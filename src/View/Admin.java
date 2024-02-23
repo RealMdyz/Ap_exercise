@@ -68,10 +68,10 @@ public class Admin {
         Scanner scanner = new Scanner(System.in);
         String p = scanner.next();
         if(p == "1"){
-
+            addAlesson(s);
         }
         else if(p == "2"){
-
+            addCapacity();
         }
         else if(p == "3"){
 
@@ -80,5 +80,110 @@ public class Admin {
             init();
         }
 
+    }
+    public void addAlesson(String s){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("It is a General Lesson Or Special one?");
+        String typeoflesson = scanner.next();
+        if(typeoflesson == "Special"){
+            Special special = new Special();
+            special.setCollegeName(s);
+            System.out.println("Please Enter the Lesson Name");
+            String lessonName = scanner.next();
+            special.setLessonName(lessonName);
+            System.out.println("Please Enter the Lesson code");
+            String lessonCode = scanner.next();
+            special.setLessonCode(lessonCode);
+            System.out.println("Please Enter the Teacher Name");
+            String TeacherName = scanner.next();
+            special.setTeacherName(TeacherName);
+            System.out.println("Please Enter the Capacity");
+            int Capacity = scanner.nextInt();
+            special.setCapacity(Capacity);
+            System.out.println("Please Enter the Unit");
+            int Unit = scanner.nextInt();
+            special.setUnit(Unit);
+            System.out.println("Please Enter the ClassDay");
+            String ClassDay = scanner.next();
+            special.setClassDay(ClassDay);
+            System.out.println("Please Enter the StartOfClass");
+            int StartOfClass = scanner.nextInt();
+            special.setStartOfClass(StartOfClass);
+            System.out.println("Please Enter the EndOfClass");
+            int EndOfClass = scanner.nextInt();
+            special.setEndOfClass(EndOfClass);
+            System.out.println("Please Enter the ExamDay");
+            String ExamDay = scanner.next();
+            special.setExamDay(ExamDay);
+            System.out.println("Please Enter the StartOfExam");
+            int StartOfExam = scanner.nextInt();
+            special.setStartOfExam(StartOfExam);
+            System.out.println("Please Enter the EndOfExam");
+            int EndOfExam = scanner.nextInt();
+            special.setEndOfExam(EndOfExam);
+            sttuf.AddSpecial(special);
+        }
+        else if(typeoflesson == "General"){
+            General general = new General();
+            general.setCollegeName(s);
+            System.out.println("Please Enter the Lesson Name");
+            String lessonName = scanner.next();
+            general.setLessonName(lessonName);
+            System.out.println("Please Enter the Lesson code");
+            String lessonCode = scanner.next();
+            general.setLessonCode(lessonCode);
+            System.out.println("Please Enter the Teacher Name");
+            String TeacherName = scanner.next();
+            general.setTeacherName(TeacherName);
+            System.out.println("Please Enter the Capacity");
+            int Capacity = scanner.nextInt();
+            general.setCapacity(Capacity);
+            System.out.println("Please Enter the Unit");
+            int Unit = scanner.nextInt();
+            general.setUnit(Unit);
+            System.out.println("Please Enter the ClassDay");
+            String ClassDay = scanner.next();
+            general.setClassDay(ClassDay);
+            System.out.println("Please Enter the StartOfClass");
+            int StartOfClass = scanner.nextInt();
+            general.setStartOfClass(StartOfClass);
+            System.out.println("Please Enter the EndOfClass");
+            int EndOfClass = scanner.nextInt();
+            general.setEndOfClass(EndOfClass);
+            System.out.println("Please Enter the ExamDay");
+            String ExamDay = scanner.next();
+            general.setExamDay(ExamDay);
+            System.out.println("Please Enter the StartOfExam");
+            int StartOfExam = scanner.nextInt();
+            general.setStartOfExam(StartOfExam);
+            System.out.println("Please Enter the EndOfExam");
+            int EndOfExam = scanner.nextInt();
+            general.setEndOfExam(EndOfExam);
+            sttuf.AddGeneral(general);
+        }
+        init();
+    }
+    public void addCapacity(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please Enter the Lesson Code");
+        String LessonCode = scanner.next();
+        int Capacity;
+        System.out.println("How much do you want to add to the capacity?");
+        Capacity = scanner.nextInt();
+        for(General general : sttuf.getGenerals()){
+            if(general.getLessonCode() == LessonCode){
+                general.setCapacity(general.getCapacity() + Capacity);
+                System.out.println("Done!");
+                init();
+            }
+        }
+        for(Special special : sttuf.getSpecials()){
+            if(special.getLessonCode() == LessonCode){
+                special.setCapacity(special.getCapacity() + Capacity);
+                System.out.println("Done!");
+                init();
+            }
+        }
+        System.out.println("Something Went Wrong");
     }
 }
