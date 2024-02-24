@@ -5,10 +5,11 @@ import Course.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class Student {
 
-    String PassWord, Name, Code;
+    String PassWord, Name, Code, esm;
 
     ArrayList<General> generallessons = new ArrayList<>();
     ArrayList<Special> Speciallessons = new ArrayList<>();
@@ -17,11 +18,55 @@ public class Student {
     public Student(Sttuf sttuf){
         this.sttuf = sttuf;
     }
+
+    public void Register(){
+        Scanner scanner = new Scanner(System.in);
+        Student student1 = new Student(sttuf);
+        String Esm, Pas, Code1;
+        System.out.println("Please Enter Your Name:");
+        Esm = scanner.next();
+        System.out.println("Please Enter Your PassWord:");
+        Pas = scanner.next();
+        System.out.println("Please Enter Your Code:");
+        Code1 = scanner.next();
+        student1.setName(Esm);
+        student1.setPassWord(Pas);
+        student1.setCode(Code1);
+        sttuf.AddStudnet(student1);
+    }
+    public boolean CheckValidation(){
+        String  pas;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please Enter your Name:");
+        esm = scanner.next();
+        System.out.println("Please Enter your PassWord:");
+        pas = scanner.next();
+        for (Student student : sttuf.getAllofStudents()){
+            if(student.getName().equals(esm) && student.getPassWord().equals(pas)){
+                return true;
+            }
+        }
+        return false;
+    }
     public void init(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("you have entered as a Student\n what do you want to do:\n 0- back\n 1- remove lesson\n 2- add lesson");
-        int choice = scanner.nextInt();
+        System.out.println("you have entered as a Student\n 1-Sing up 2- Sing in");
         CliConnector cliConnector = new CliConnector(sttuf);
+        String s = scanner.nextLine();
+        if(s.equals("1")){
+            Register();
+            init();
+        }
+        else if(s.equals("2") && !CheckValidation() ){
+            System.out.println("Your PassWord or Your Name is not Correct!");
+            init();
+        }
+        else if(!s.equals("2")){
+            cliConnector.init();
+        }
+
+        System.out.println("you have entered as a " + esm +"\n what do you want to do:\n 0- back\n 1- remove lesson\n 2- add lesson");
+        int choice = scanner.nextInt();
         scanner.nextLine();
         if (choice == 1) {
             removelesson();
@@ -35,10 +80,10 @@ public class Student {
         }
     }
     public void addlesson(){
-
+        init();
     }
     public void removelesson(){
-
+        init();
     }
 
     public boolean TadaKhold(String Examday, String ClassDay, int StartOfexam, int EndOfexam, int StartOfClass, int EndOfClass){
@@ -83,6 +128,14 @@ public class Student {
 
     public void setCountOfgeneral(int countOfgeneral) {
         this.countOfgeneral = countOfgeneral;
+    }
+
+    public String getPassWord() {
+        return PassWord;
+    }
+
+    public void setPassWord(String passWord) {
+        PassWord = passWord;
     }
 
     public int getCountOfspecil() {
