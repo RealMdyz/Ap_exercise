@@ -2,7 +2,9 @@ package Course;
 
 import View.Student;
 import java.util.ArrayList;
+import Controller.Sttuf;
 public class General extends Course{
+
     String CollegeName;
     String LessonName, LessonCode, TeacherName;
     int Capacity,RegistratioNumber, Unit;
@@ -11,8 +13,50 @@ public class General extends Course{
     String ExamDay;
     int StartOfExam, EndOfExam;
     ArrayList<Student> students = new ArrayList<>();
-    public General(){
-
+    public General(Sttuf sttuf){
+        super(sttuf);
+    }
+    public void removeStu(String Code, Sttuf sttuf,General general){
+        for(Student student: students){
+            if(student.getCode().equals(Code)){
+                students.remove(student);
+                Capacity += 1;
+                break;
+            }
+        }
+        for(Student student : sttuf.getAllofStudents()){
+            if(student.getCode().equals(Code)){
+                student.RemoveGeneral(general);
+            }
+        }
+    }
+    public boolean AddStu(String CodeOfStudent, Sttuf sttuf, General general){
+        for(Student student : sttuf.getAllofStudents()){
+            if(student.getCode().equals(CodeOfStudent)){
+                if(student.getCountOfgeneral() + student.getCountOfspecil() + Unit > 20){
+                    System.out.println("\nSorry you Cant have more than 20 Unit!\n");
+                    return false;
+                }
+                if(student.getCountOfgeneral() + Unit > 5){
+                    System.out.println("\nSorry you Cant have more than 5 Unit of General Lesson!\n");
+                    return false;
+                }
+                if(Capacity == 0){
+                    System.out.println("\nSorry you Cant have this Lesson because this lesson if Full!!\n");
+                    return false;
+                }
+                if(student.TadaKhold(ExamDay, ClassDay, StartOfExam, EndOfExam, StartOfClass, EndOfClass)){
+                    System.out.println("\nSorry you Cant have this Lesson because Two of your courses overlap!!\n");
+                    return false;
+                }
+                Capacity -= 1;
+                students.add(student);
+                student.AddGeneral(general);
+                System.out.println("\n Done!\n");
+                return true;
+            }
+        }
+        return false;
     }
     public String getCollegeName() {
         return CollegeName;

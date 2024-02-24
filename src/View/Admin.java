@@ -2,6 +2,7 @@ package View;
 
 import Controller.CliConnector;
 import Controller.Sttuf;
+import Course.Course;
 import Course.General;
 import Course.Special;
 
@@ -54,16 +55,18 @@ public class Admin {
             if(c)
                 Colleges.add(special.getCollegeName());
         }
+        if(!Colleges.isEmpty()){
+            System.out.println("The College Names is :");
+            for(String s : Colleges){
+                System.out.println(s);
 
-        System.out.println("The College Names is :");
-        for(String s : Colleges){
-            System.out.println(s);
-
+            }
         }
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Chose your option :\n 0- back \n chose a college name");
         String s = scanner.next();
-        if(s == "0"){
+        if(s.equals("0")){
             init();
         }
         Keepgoing(s);
@@ -89,7 +92,7 @@ public class Admin {
             addCapacity();
         }
         else if(p == 3){
-            AddOrRemoveAStudent();
+            AddOrRemoveAStudent(s);
         }
         else {
             init();
@@ -102,7 +105,7 @@ public class Admin {
         String typeoflesson = scanner.next();
 
         if(typeoflesson.equals("Special")){
-            Special special = new Special();
+            Special special = new Special(sttuf);
             special.setCollegeName(s);
             System.out.println("Please Enter the Lesson Name");
             String lessonName = scanner.next();
@@ -140,7 +143,7 @@ public class Admin {
             sttuf.AddSpecial(special);
         }
         else if(typeoflesson.equals("General")){
-            General general = new General();
+            General general = new General(sttuf);
             general.setCollegeName(s);
             System.out.println("Please Enter the Lesson Name");
             String lessonName = scanner.next();
@@ -203,9 +206,42 @@ public class Admin {
         System.out.println("Something Went Wrong");
         init();
     }
-    public void AddOrRemoveAStudent(){
-
-
+    public void AddOrRemoveAStudent(String s){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Chose a lesson from this college!");
+        String lessonName = scanner.next();
+        Course course = new Course(sttuf);
+        course.seeStudent(lessonName);
+        System.out.println("What you do want to do ?\n 1- remove a student from this lesson \n 2- add a student to this lesson");
+        int p = scanner.nextInt();
+        if(p == 1){
+            System.out.println("Please Enter the Code of the Student:");
+            String Code = scanner.next();
+            for(General general : sttuf.getGenerals()){
+                if(general.getLessonName().equals(lessonName)){
+                    general.removeStu(Code, sttuf, general);
+                }
+            }
+            for(Special special : sttuf.getSpecials()){
+                if(special.getLessonName().equals(lessonName)){
+                    special.removeStu(Code, sttuf, special);
+                }
+            }
+        }
+        else if(p == 2){
+            System.out.println("Please Enter the Code of the Student:");
+            String Code = scanner.next();
+            for(General general : sttuf.getGenerals()){
+                if(general.getLessonName().equals(lessonName)){
+                    general.AddStu(Code, sttuf, general);
+                }
+            }
+            for(Special special : sttuf.getSpecials()){
+                if(special.getLessonName().equals(lessonName)){
+                    special.AddStu(Code, sttuf, special);
+                }
+            }
+        }
         init();
     }
 }

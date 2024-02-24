@@ -40,4 +40,68 @@ public class Student {
     public void removelesson(){
 
     }
+
+    public boolean TadaKhold(String Examday, String ClassDay, int StartOfexam, int EndOfexam, int StartOfClass, int EndOfClass){
+        for(General general : generallessons){
+            if(Examday.equals(general.getExamDay()) &&( (StartOfexam >= general.getStartOfExam() && StartOfexam <= general.getEndOfExam()) ||  (EndOfexam >= general.getStartOfExam() && EndOfexam <= general.getEndOfExam()))){
+                return true;
+            }
+            if(ClassDay.equals(general.getClassDay()) &&( (StartOfClass >= general.getStartOfClass() && StartOfClass <= general.getEndOfClass()) ||  (EndOfClass >= general.getStartOfClass() && EndOfClass <= general.getEndOfClass()))){
+                return true;
+            }
+        }
+        for(Special special : Speciallessons){
+            if(Examday.equals(special.getExamDay()) &&( (StartOfexam >= special.getStartOfExam() && StartOfexam <= special.getEndOfExam()) ||  (EndOfexam >= special.getStartOfExam() && EndOfexam <= special.getEndOfExam()))){
+                return true;
+            }
+            if(ClassDay.equals(special.getClassDay()) &&( (StartOfClass >= special.getStartOfClass() && StartOfClass <= special.getEndOfClass()) ||  (EndOfClass >= special.getStartOfClass() && EndOfClass <= special.getEndOfClass()))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getCode() {
+        return Code;
+    }
+
+    public void setCode(String code) {
+        Code = code;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public int getCountOfgeneral() {
+        return countOfgeneral;
+    }
+
+    public void setCountOfgeneral(int countOfgeneral) {
+        this.countOfgeneral = countOfgeneral;
+    }
+
+    public int getCountOfspecil() {
+        return countOfspecil;
+    }
+
+    public void setCountOfspecil(int countOfspecil) {
+        this.countOfspecil = countOfspecil;
+    }
+    public void AddGeneral(General general){
+        generallessons.add(general);
+    }
+    public void AddSpecial(Special special){
+        Speciallessons.add(special);
+    }
+    public void RemoveSpecial(Special special){
+        Speciallessons.remove(special);
+    }
+    public void RemoveGeneral(General general){
+        generallessons.remove(general);
+    }
 }

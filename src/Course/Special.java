@@ -1,6 +1,8 @@
 package Course;
 
 import java.util.ArrayList;
+
+import Controller.Sttuf;
 import View.*;
 public class Special extends Course{
     String CollegeName;
@@ -11,8 +13,46 @@ public class Special extends Course{
     String ExamDay;
     int StartOfExam, EndOfExam;
     ArrayList<Student> students = new ArrayList<>();
-    public Special(){
-
+    public void removeStu(String Code, Sttuf sttuf, Special special){
+        for(Student student: students){
+            if(student.getCode().equals(Code)){
+                students.remove(student);
+                Capacity += 1;
+                break;
+            }
+        }
+        for(Student student : sttuf.getAllofStudents()){
+            if(student.getCode().equals(Code)){
+                student.RemoveSpecial(special);
+            }
+        }
+    }
+    public boolean AddStu(String CodeOfStudent, Sttuf sttuf, Special special){
+        for(Student student : sttuf.getAllofStudents()){
+            if(student.getCode().equals(CodeOfStudent)){
+                if(student.getCountOfgeneral() + student.getCountOfspecil() + Unit > 20){
+                    System.out.println("\nSorry you Cant have more than 20 Unit!\n");
+                    return false;
+                }
+                if(Capacity == 0){
+                    System.out.println("\nSorry you Cant have this Lesson because this lesson if Full!!\n");
+                    return false;
+                }
+                if(student.TadaKhold(ExamDay, ClassDay, StartOfExam, EndOfExam, StartOfClass, EndOfClass)){
+                    System.out.println("\nSorry you Cant have this Lesson because Two of your courses overlap!!\n");
+                    return false;
+                }
+                Capacity -= 1;
+                students.add(student);
+                student.AddSpecial(special);
+                System.out.println("\n Done!\n");
+                return true;
+            }
+        }
+        return false;
+    }
+    public Special(Sttuf sttuf){
+        super(sttuf);
     }
     public String getCollegeName() {
         return CollegeName;
