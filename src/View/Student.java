@@ -54,7 +54,7 @@ public class Student {
     }
     public void init(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("you have entered as a Student\n 1-Sing up \n 2- Sing in \n 0- back");
+        System.out.println("you have entered as a Student\n 1- Sing up \n 2- Sing in \n 0- back");
         String s = scanner.nextLine();
         if(s.equals("1")){
             Register();
@@ -68,7 +68,7 @@ public class Student {
             cliConnector.init();
         }
 
-        System.out.println("you have entered as a " + esm +"\n what do you want to do:\n 0- back\n 1- List of My lesson\n 2- List of Available courses");
+        System.out.println("you have entered as a " + esm +"\n what do you want to do:\n 0- back\n 1- List of My lesson\n 2- List of Available Colleges");
         int choice = scanner.nextInt();
         scanner.nextLine();
         if (choice == 1) {
@@ -117,9 +117,7 @@ public class Student {
             System.out.println("The College Names is :");
             for (String s : Colleges) {
                 System.out.println(s);
-
             }
-
         }
         System.out.println("Chose One of Them!:");
         Scanner scanner = new Scanner(System.in);
@@ -145,15 +143,16 @@ public class Student {
             String CodeOfLesson = scanner.next();
             for(Special special : sttuf.getSpecials()){
                 if(special.getLessonCode().equals(CodeOfLesson)){
-
-                    if(special.AddStu(Code, sttuf, special))
+                    if(sttuf.AddStuSp(Code, sttuf, special))
                         Speciallessons.add(special);
+                    System.out.println("\nThe True Code!\n");
                 }
             }
             for(General general : sttuf.getGenerals()){
                 if(general.getLessonCode().equals(CodeOfLesson)){
-                    if(general.AddStu(Code, sttuf, general))
+                    if(sttuf.AddStuGn(Code, sttuf, general))
                         generallessons.add(general);
+                    System.out.println("\nThe True Code!\n");
                 }
             }
             init();

@@ -27,29 +27,9 @@ public class Special extends Course{
             }
         }
     }
-    public boolean AddStu(String CodeOfStudent, Sttuf sttuf, Special special){
-        for(Student student : sttuf.getAllofStudents()){
-            if(student.getCode().equals(CodeOfStudent)){
-                if(student.getCountOfgeneral() + student.getCountOfspecil() + Unit > 20){
-                    System.out.println("\nSorry you Cant have more than 20 Unit!\n");
-                    return false;
-                }
-                if(Capacity == 0){
-                    System.out.println("\nSorry you Cant have this Lesson because this lesson if Full!!\n");
-                    return false;
-                }
-                if(student.TadaKhold(ExamDay, ClassDay, StartOfExam, EndOfExam, StartOfClass, EndOfClass)){
-                    System.out.println("\nSorry you Cant have this Lesson because Two of your courses overlap!!\n");
-                    return false;
-                }
-                Capacity -= 1;
-                students.add(student);
-                student.AddSpecial(special);
-                System.out.println("\n Done!\n");
-                return true;
-            }
-        }
-        return false;
+
+    public void  addStudent(Student student){
+        students.add(student);
     }
     public Special(Sttuf sttuf){
         super(sttuf);

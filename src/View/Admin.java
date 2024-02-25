@@ -20,7 +20,7 @@ public class Admin {
     }
     public void init(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("you have entered as a Admin\n what do you want to do:\n 0- back\n 1- list of colleges");
+        System.out.println("you have entered as a Admin\n what do you want to do:\n 0- back\n 1- list of colleges \n 2- List Of Students");
         int choice = scanner.nextInt();
 
         scanner.nextLine();
@@ -29,6 +29,13 @@ public class Admin {
         }
         else if(choice == 1){
             seecolleges();
+        }
+        else if(choice == 2){
+            System.out.println("Student List :");
+            for(Student student : sttuf.getAllofStudents()){
+                System.out.println(student.getName() + " " + student.getCode());
+            }
+            init();
         }
         else {
             init();
@@ -235,12 +242,12 @@ public class Admin {
             String Code = scanner.next();
             for(General general : sttuf.getGenerals()){
                 if(general.getLessonName().equals(lessonName)){
-                    general.AddStu(Code, sttuf, general);
+                    sttuf.AddStuGn(Code, sttuf, general);
                 }
             }
             for(Special special : sttuf.getSpecials()){
                 if(special.getLessonName().equals(lessonName)){
-                    special.AddStu(Code, sttuf, special);
+                    sttuf.AddStuSp(Code, sttuf, special);
                 }
             }
         }

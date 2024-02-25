@@ -56,10 +56,14 @@ public class General extends Course{
                 return true;
             }
         }
+        System.out.println("You are Not Register to The System !");
         return false;
     }
     public String getCollegeName() {
         return CollegeName;
+    }
+    public void  addStudent(Student student){
+        students.add(student);
     }
 
     public void setCollegeName(String collegeName) {
