@@ -5,8 +5,9 @@ public class MyProject {
     public MyProject(){
         init();
     }
-    public Sttuf sttuf = new Sttuf();
+    public static Sttuf sttuf;
     public void init(){
+        sttuf = new Sttuf();
         CliConnector cliConnector = new CliConnector(sttuf);
         cliConnector.init();
     }

@@ -11,16 +11,18 @@ import java.util.Scanner;
 
 public class Admin {
     String PassWord, Name;
-    public Sttuf sttuf;
+    public  Sttuf sttuf;
 
+    CliConnector cliConnector;
     public Admin(Sttuf sttuf){
         this.sttuf = sttuf;
+        this.cliConnector = new CliConnector(sttuf);
     }
     public void init(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("you have entered as a Admin\n what do you want to do:\n 0- back\n 1- list of colleges");
         int choice = scanner.nextInt();
-        CliConnector cliConnector = new CliConnector(sttuf);
+
         scanner.nextLine();
         if (choice == 0) {
             cliConnector.init();

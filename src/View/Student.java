@@ -14,9 +14,13 @@ public class Student {
     ArrayList<General> generallessons = new ArrayList<>();
     ArrayList<Special> Speciallessons = new ArrayList<>();
     int countOfgeneral, countOfspecil;
-    public Sttuf sttuf;
+
+    CliConnector cliConnector;
+    public static Sttuf sttuf;
+
     public Student(Sttuf sttuf){
         this.sttuf = sttuf;
+        cliConnector = new CliConnector(sttuf);
     }
 
     public void Register(){
@@ -50,8 +54,7 @@ public class Student {
     }
     public void init(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("you have entered as a Student\n 1-Sing up 2- Sing in");
-        CliConnector cliConnector = new CliConnector(sttuf);
+        System.out.println("you have entered as a Student\n 1-Sing up \n 2- Sing in \n 0- back");
         String s = scanner.nextLine();
         if(s.equals("1")){
             Register();
@@ -65,25 +68,99 @@ public class Student {
             cliConnector.init();
         }
 
-        System.out.println("you have entered as a " + esm +"\n what do you want to do:\n 0- back\n 1- remove lesson\n 2- add lesson");
+        System.out.println("you have entered as a " + esm +"\n what do you want to do:\n 0- back\n 1- List of My lesson\n 2- List of Available courses");
         int choice = scanner.nextInt();
         scanner.nextLine();
         if (choice == 1) {
-            removelesson();
-        } else if (choice == 2) {
-            addlesson();
-        } else if (choice == 0) {
+            System.out.println("You Have been Register for " + ((int)generallessons.size() + (int)Speciallessons.size())+ " Lesson :");
+            for(General general : generallessons){
+                System.out.println(general.getLessonName() + " " + general.getLessonCode() + " " + general.getTeacherName());
+            }
+            for(Special special : Speciallessons){
+                System.out.println(special.getLessonName() + " " + special.getLessonCode() + " " + special.getTeacherName());
+            }
+        }
+        else if (choice == 2) {
+            List_OF_ALL_COLLEGES();
+        }
+        else if (choice == 0) {
             cliConnector.init();
         }
         else {
             init();
         }
     }
-    public void addlesson(){
-        init();
+    public void List_OF_ALL_COLLEGES(){
+        ArrayList<String> Colleges = new ArrayList<>();
+        for(General general : sttuf.getGenerals()){
+            boolean c = true;
+            for(String s : Colleges){
+                if(s.equals(general.getCollegeName())){
+                    c = false;
+                }
+            }
+            if(c)
+                Colleges.add(general.getCollegeName());
+
+        }
+        for(Special special : sttuf.getSpecials()){
+            boolean c = true;
+            for(String s : Colleges){
+                if(s.equals(special.getCollegeName())){
+                    c = false;
+                }
+            }
+            if(c)
+                Colleges.add(special.getCollegeName());
+        }
+        if(!Colleges.isEmpty()) {
+            System.out.println("The College Names is :");
+            for (String s : Colleges) {
+                System.out.println(s);
+
+            }
+
+        }
+        System.out.println("Chose One of Them!:");
+        Scanner scanner = new Scanner(System.in);
+        String CollegeName = scanner.next();
+        List_All_OF_THE_LESSON_OF_A_COLLEGE(CollegeName);
     }
-    public void removelesson(){
-        init();
+    public void List_All_OF_THE_LESSON_OF_A_COLLEGE(String CollegeName){
+        for(General general : sttuf.getGenerals()){
+            if(general.getCollegeName().equals(CollegeName)){
+                System.out.println(general.getLessonName() + " " + general.getLessonCode() + " " + general.getTeacherName());
+            }
+        }
+        for(Special special : sttuf.getSpecials()){
+            if(special.getCollegeName().equals(CollegeName)){
+                System.out.println(special.getLessonName() + " " + special.getLessonCode() + " " +special.getTeacherName());
+            }
+        }
+        System.out.println("Do you Want to Get Any OF Them?! \n 1- Yes \n 2- No");
+        Scanner scanner = new Scanner(System.in);
+        String Answer = scanner.next();
+        if(Answer.equals("1")){
+            System.out.println("Please Enter the Code Of the Lesson");
+            String CodeOfLesson = scanner.next();
+            for(Special special : sttuf.getSpecials()){
+                if(special.getLessonCode().equals(CodeOfLesson)){
+
+                    if(special.AddStu(Code, sttuf, special))
+                        Speciallessons.add(special);
+                }
+            }
+            for(General general : sttuf.getGenerals()){
+                if(general.getLessonCode().equals(CodeOfLesson)){
+                    if(general.AddStu(Code, sttuf, general))
+                        generallessons.add(general);
+                }
+            }
+            init();
+        }
+        else {
+          init();
+        }
     }
 
     public boolean TadaKhold(String Examday, String ClassDay, int StartOfexam, int EndOfexam, int StartOfClass, int EndOfClass){
