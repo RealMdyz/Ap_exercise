@@ -14,15 +14,21 @@ public class Admin {
     public  Sttuf sttuf;
 
     CliConnector cliConnector;
+    String AdminPass = "Admin";
     public Admin(Sttuf sttuf){
         this.sttuf = sttuf;
         this.cliConnector = new CliConnector(sttuf);
     }
     public void init(){
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Please Enter The Admin PassWord");
+        String s = scanner.next();
+        if(!s.equals(AdminPass)){
+            System.out.println("Its Not Correct !");
+            cliConnector.init();
+        }
         System.out.println("you have entered as a Admin\n what do you want to do:\n 0- back\n 1- list of colleges \n 2- List Of Students");
         int choice = scanner.nextInt();
-
         scanner.nextLine();
         if (choice == 0) {
             cliConnector.init();
