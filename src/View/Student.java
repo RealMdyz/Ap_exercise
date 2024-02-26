@@ -141,16 +141,19 @@ public class Student {
         if(Answer.equals("1")){
             System.out.println("Please Enter the Code Of the Lesson");
             String CodeOfLesson = scanner.next();
+            System.out.println("Please Enter Your Code");
+            String CodeOfStu = scanner.next();
+            Code = CodeOfStu;
             for(Special special : sttuf.getSpecials()){
                 if(special.getLessonCode().equals(CodeOfLesson)){
-                    if(sttuf.AddStuSp(Code, sttuf, special))
+                    if(sttuf.AddStuSpFromSt(Code, special))
                         Speciallessons.add(special);
                     System.out.println("\nThe True Code!\n");
                 }
             }
             for(General general : sttuf.getGenerals()){
                 if(general.getLessonCode().equals(CodeOfLesson)){
-                    if(sttuf.AddStuGn(Code, sttuf, general))
+                    if(sttuf.AddStuGnFromSt(Code, general))
                         generallessons.add(general);
                     System.out.println("\nThe True Code!\n");
                 }

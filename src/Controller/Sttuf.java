@@ -24,8 +24,33 @@ public class Sttuf {
         System.out.println("You Have Register Successfuly!!");
 
     }
-    public boolean AddStuSp(String CodeOfStudent, Sttuf sttuf, Special special){
-        for(Student student : sttuf.getAllofStudents()){
+    public boolean AddStuSp(String CodeOfStudent, Special special){
+        for(Student student : AllofStudents){
+            if(student.getCode().equals(CodeOfStudent)){
+                if(student.getCountOfgeneral() + student.getCountOfspecil() + special.getUnit()> 20){
+                    System.out.println("\nSorry you Cant have more than 20 Unit!\n");
+                    return false;
+                }
+                if(special.getCapacity()== 0){
+                    System.out.println("\nSorry you Cant have this Lesson because this lesson if Full!!\n");
+                    return false;
+                }
+                if(student.TadaKhold(special.getExamDay(), special.getClassDay(), special.getStartOfExam(), special.getEndOfExam(), special.getStartOfClass(), special.getEndOfClass())){
+                    System.out.println("\nSorry you Cant have this Lesson because Two of your courses overlap!!\n");
+                    return false;
+                }
+                special.setCapacity(special.getCapacity() - 1);
+                special.addStudent(student);
+                student.AddSpecial(special);
+                System.out.println("\n Done!\n");
+                return true;
+            }
+        }
+        System.out.println("You are Not Register to The System !");
+        return false;
+    }
+    public boolean AddStuSpFromSt(String CodeOfStudent, Special special){
+        for(Student student : AllofStudents){
             if(student.getCode().equals(CodeOfStudent)){
                 if(student.getCountOfgeneral() + student.getCountOfspecil() + special.getUnit()> 20){
                     System.out.println("\nSorry you Cant have more than 20 Unit!\n");
@@ -50,8 +75,35 @@ public class Sttuf {
         return false;
     }
 
-    public boolean AddStuGn(String CodeOfStudent, Sttuf sttuf, General general){
-        for(Student student : sttuf.getAllofStudents()){
+    public boolean AddStuGn(String CodeOfStudent, General general){
+        for(Student student : AllofStudents){
+            if(student.getCode().equals(CodeOfStudent)){
+                if(student.getCountOfgeneral() + student.getCountOfspecil() + general.getUnit()> 20){
+                    System.out.println("\nSorry you Cant have more than 20 Unit!\n");
+                    return false;
+                }
+                if(general.getCapacity()== 0){
+                    System.out.println("\nSorry you Cant have this Lesson because this lesson if Full!!\n");
+                    return false;
+                }
+                if(student.TadaKhold(general.getExamDay(), general.getClassDay(), general.getStartOfExam(), general.getEndOfExam(), general.getStartOfClass(), general.getEndOfClass())){
+                    System.out.println("\nSorry you Cant have this Lesson because Two of your courses overlap!!\n");
+                    return false;
+                }
+                general.setCapacity(general.getCapacity() - 1);
+                general.addStudent(student);
+                student.AddGeneral(general);
+                System.out.println("\n Done!\n");
+                return true;
+            }
+        }
+        System.out.println("You are Not Register to The System !");
+        return false;
+    }
+    public boolean AddStuGnFromSt(String CodeOfStudent, General general){
+        System.out.println("\n#DeabuG!\n");
+        for(Student student : AllofStudents){
+            System.out.println(student.getCode() + " " + CodeOfStudent);
             if(student.getCode().equals(CodeOfStudent)){
                 if(student.getCountOfgeneral() + student.getCountOfspecil() + general.getUnit()> 20){
                     System.out.println("\nSorry you Cant have more than 20 Unit!\n");

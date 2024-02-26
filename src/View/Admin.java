@@ -242,12 +242,12 @@ public class Admin {
             String Code = scanner.next();
             for(General general : sttuf.getGenerals()){
                 if(general.getLessonName().equals(lessonName)){
-                    sttuf.AddStuGn(Code, sttuf, general);
+                    sttuf.AddStuGn(Code, general);
                 }
             }
             for(Special special : sttuf.getSpecials()){
                 if(special.getLessonName().equals(lessonName)){
-                    sttuf.AddStuSp(Code, sttuf, special);
+                    sttuf.AddStuSp(Code, special);
                 }
             }
         }
