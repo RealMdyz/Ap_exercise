@@ -97,7 +97,7 @@ public class Admin {
                 System.out.println(special.getLessonName() + " " + special.getLessonCode() + " " + special.getTeacherName() + " " + special.getCapacity());
             }
         }
-        System.out.println("Chose your option :\n 1- add a Lesson to this College\n 2- add Capacity to a lesson\n 3-See Registered Student for adding them or removing them ");
+        System.out.println("Chose your option :\n 1- add a Lesson to this College\n 2- add Capacity to a lesson\n 3- See Registered Student for adding them or removing them ");
         Scanner scanner = new Scanner(System.in);
         int p = scanner.nextInt();
         if(p == 1){
