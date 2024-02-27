@@ -89,12 +89,12 @@ public class Admin {
     public void Keepgoing(String s){
         for(General general : sttuf.getGenerals()){
             if(general.getCollegeName().equals(s)){
-                System.out.println(general.getLessonName() + " " + general.getLessonCode());
+                System.out.println(general.getLessonName() + " " + general.getLessonCode()  + " " + general.getTeacherName() + " " + general.getCapacity());
             }
         }
         for(Special special : sttuf.getSpecials()){
             if(special.getCollegeName().equals(s)){
-                System.out.println(special.getLessonName() + " " + special.getLessonCode());
+                System.out.println(special.getLessonName() + " " + special.getLessonCode() + " " + special.getTeacherName() + " " + special.getCapacity());
             }
         }
         System.out.println("Chose your option :\n 1- add a Lesson to this College\n 2- add Capacity to a lesson\n 3-See Registered Student for adding them or removing them ");
