@@ -135,6 +135,67 @@ public class MyProject {
         generalPH.setUnit(3);
         sttuf.AddGeneral(generalPH);
 
+
+        Special specialIE = new Special(sttuf);
+        specialIE.setCollegeName("Industry");
+        specialIE.setLessonName("OR");
+        specialIE.setTeacherName("Hasani");
+        specialIE.setCapacity(40);
+        specialIE.setLessonCode("26115");
+        specialIE.setExamDay("11-April");
+        specialIE.setClassDay("Saturday-Monday");
+        specialIE.setStartOfClass(10);
+        specialIE.setEndOfClass(12);
+        specialIE.setStartOfExam(9);
+        specialIE.setEndOfExam(14);
+        specialIE.setUnit(3);
+        sttuf.AddSpecial(specialIE);
+
+        Special specialIE1 = new Special(sttuf);
+        specialIE1.setCollegeName("Industry");
+        specialIE1.setLessonName("OR1");
+        specialIE1.setTeacherName("Hasani");
+        specialIE1.setCapacity(40);
+        specialIE1.setLessonCode("26117");
+        specialIE1.setExamDay("19-April");
+        specialIE1.setClassDay("Saturday-Monday");
+        specialIE1.setStartOfClass(10);
+        specialIE1.setEndOfClass(12);
+        specialIE1.setStartOfExam(9);
+        specialIE1.setEndOfExam(14);
+        specialIE1.setUnit(3);
+        sttuf.AddSpecial(specialIE1);
+
+        Special specialIE2 = new Special(sttuf);
+        specialIE2.setCollegeName("Industry");
+        specialIE2.setLessonName("OR3");
+        specialIE2.setTeacherName("Hasani");
+        specialIE2.setCapacity(40);
+        specialIE2.setLessonCode("26117");
+        specialIE2.setExamDay("28-April");
+        specialIE2.setClassDay("Saturday-Monday");
+        specialIE2.setStartOfClass(16);
+        specialIE2.setEndOfClass(18);
+        specialIE2.setStartOfExam(9);
+        specialIE2.setEndOfExam(14);
+        specialIE2.setUnit(3);
+        sttuf.AddSpecial(specialIE2);
+
+        General generalOR = new General(sttuf);
+        generalOR.setCollegeName("Industry");
+        generalOR.setLessonName("KarGah");
+        generalOR.setTeacherName("Ahmadi");
+        generalOR.setCapacity(200);
+        generalOR.setLessonCode("26015");
+        generalOR.setExamDay("29-April");
+        generalOR.setClassDay("Saturday-Monday");
+        generalOR.setStartOfClass(6);
+        generalOR.setEndOfClass(10);
+        generalOR.setStartOfExam(8);
+        generalOR.setEndOfExam(12);
+        generalOR.setUnit(3);
+        sttuf.AddGeneral(generalOR);
+
     }
     // this(nothing) --> باعث میشه خود کلاس رو پاس بده بهش
     // برای نوشتن کار با فایل دروس و یوزر ها رو توی چندفایل جدا بنویسم تا راحت تر باشم

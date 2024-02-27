@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class Admin {
     String PassWord, Name;
     public  Sttuf sttuf;
-
     CliConnector cliConnector;
     String AdminPass = "Admin";
     public Admin(Sttuf sttuf){
