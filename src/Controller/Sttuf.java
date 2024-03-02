@@ -40,8 +40,6 @@ public class Sttuf {
                     return false;
                 }
                 special.setCapacity(special.getCapacity() - 1);
-                special.addStudent(student);
-                student.AddSpecial(special);
                 System.out.println("\n Done!\n");
                 return true;
             }
@@ -65,8 +63,6 @@ public class Sttuf {
                     return false;
                 }
                 special.setCapacity(special.getCapacity() - 1);
-                special.addStudent(student);
-                student.AddSpecial(special);
                 System.out.println("\n Done!\n");
                 return true;
             }
@@ -91,8 +87,6 @@ public class Sttuf {
                     return false;
                 }
                 general.setCapacity(general.getCapacity() - 1);
-                general.addStudent(student);
-                student.AddGeneral(general);
                 System.out.println("\n Done!\n");
                 return true;
             }
@@ -101,7 +95,7 @@ public class Sttuf {
         return false;
     }
     public boolean AddStuGnFromSt(String CodeOfStudent, General general){
-        System.out.println("\n#DeabuG!\n");
+
         for(Student student : AllofStudents){
             System.out.println(student.getCode() + " " + CodeOfStudent);
             if(student.getCode().equals(CodeOfStudent)){
@@ -118,8 +112,6 @@ public class Sttuf {
                     return false;
                 }
                 general.setCapacity(general.getCapacity() - 1);
-                general.addStudent(student);
-                student.AddGeneral(general);
                 System.out.println("\n Done!\n");
                 return true;
             }

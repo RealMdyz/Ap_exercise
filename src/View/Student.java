@@ -127,13 +127,12 @@ public class Student {
     public void List_All_OF_THE_LESSON_OF_A_COLLEGE(String CollegeName){
         for(General general : sttuf.getGenerals()){
             if(general.getCollegeName().equals(CollegeName)){
-                System.out.println(general.getLessonName() + " " + general.getLessonCode() + " " + general.getTeacherName());
+                System.out.println(general.getLessonName() + " " + general.getLessonCode()  + " " + general.getTeacherName() + " " + general.getCapacity() + " " + general.getClassDay() +  " " + general.getStartOfClass() + " " + general.getEndOfClass() + " "  + general.getExamDay() + " " + general.getStartOfExam() + " " + general.getEndOfExam()) ;
             }
         }
         for(Special special : sttuf.getSpecials()){
             if(special.getCollegeName().equals(CollegeName)){
-                System.out.println(special.getLessonName() + " " + special.getLessonCode() + " " +special.getTeacherName());
-            }
+                System.out.println(special.getLessonName() + " " + special.getLessonCode()  + " " + special.getTeacherName() + " " + special.getCapacity() + " " + special.getClassDay() +  " " + special.getStartOfClass() + " " + special.getEndOfClass() + " "  + special.getExamDay() + " " + special.getStartOfExam() + " " + special.getEndOfExam());            }
         }
         System.out.println("Do you Want to Get Any OF Them?! \n 1- Yes \n 2- No");
         Scanner scanner = new Scanner(System.in);
@@ -148,14 +147,12 @@ public class Student {
                 if(special.getLessonCode().equals(CodeOfLesson)){
                     if(sttuf.AddStuSpFromSt(Code, special))
                         Speciallessons.add(special);
-                    System.out.println("\nThe True Code!\n");
                 }
             }
             for(General general : sttuf.getGenerals()){
                 if(general.getLessonCode().equals(CodeOfLesson)){
                     if(sttuf.AddStuGnFromSt(Code, general))
                         generallessons.add(general);
-                    System.out.println("\nThe True Code!\n");
                 }
             }
             init();

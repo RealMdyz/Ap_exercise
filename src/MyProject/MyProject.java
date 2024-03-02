@@ -153,7 +153,7 @@ public class MyProject {
 
         Special specialIE1 = new Special(sttuf);
         specialIE1.setCollegeName("Industry");
-        specialIE1.setLessonName("OR1");
+        specialIE1.setLessonName("OR2");
         specialIE1.setTeacherName("Hasani");
         specialIE1.setCapacity(40);
         specialIE1.setLessonCode("26117");
@@ -171,7 +171,7 @@ public class MyProject {
         specialIE2.setLessonName("OR3");
         specialIE2.setTeacherName("Hasani");
         specialIE2.setCapacity(40);
-        specialIE2.setLessonCode("26117");
+        specialIE2.setLessonCode("26119");
         specialIE2.setExamDay("28-April");
         specialIE2.setClassDay("Saturday-Monday");
         specialIE2.setStartOfClass(16);
