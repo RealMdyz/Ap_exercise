@@ -13,16 +13,16 @@ public class Sttuf {
     public void AddSpecial(Special special){
         specials.add(special);
     }
-    public void AddStudnet(Student student){
+    public boolean AddStudnet(Student student){
         for(Student student1 : AllofStudents){
             if(student1.getName().equals(student.getName()) && student1.getCode().equals(student.getCode())){
                 System.out.println("You Have Been Register Before!");
-                return;
+                return false;
             }
         }
         AllofStudents.add(student);
         System.out.println("You Have Register Successfuly!!");
-
+        return true;
     }
     public boolean AddStuSp(String CodeOfStudent, Special special){
         for(Student student : AllofStudents){

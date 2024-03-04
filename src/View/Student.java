@@ -2,7 +2,11 @@ package View;
 
 import Controller.*;
 import Course.*;
+import java.io.File;
+import java.io.File;
+import java.io.PrintWriter;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.SortedMap;
@@ -14,15 +18,13 @@ public class Student {
     ArrayList<General> generallessons = new ArrayList<>();
     ArrayList<Special> Speciallessons = new ArrayList<>();
     int countOfgeneral, countOfspecil;
-
+    private final String relativePath = "src/File/";
     CliConnector cliConnector;
     public static Sttuf sttuf;
-
     public Student(Sttuf sttuf){
         this.sttuf = sttuf;
         cliConnector = new CliConnector(sttuf);
     }
-
     public void Register(){
         Scanner scanner = new Scanner(System.in);
         Student student1 = new Student(sttuf);
@@ -36,7 +38,17 @@ public class Student {
         student1.setName(Esm);
         student1.setPassWord(Pas);
         student1.setCode(Code1);
-        sttuf.AddStudnet(student1);
+        boolean x = sttuf.AddStudnet(student1);
+        if(x){
+            File userFile = new File(relativePath + Esm + ".txt");
+            try {
+                userFile.createNewFile();
+            }
+            catch (Exception e){
+
+            }
+        }
+
     }
     public boolean CheckValidation(){
         String  pas;
@@ -71,8 +83,23 @@ public class Student {
         System.out.println("you have entered as a " + esm +"\n what do you want to do:\n 0- back\n 1- List of My lesson\n 2- List of Available Colleges");
         int choice = scanner.nextInt();
         scanner.nextLine();
+        String Path = relativePath + esm + ".txt";
+        File file = new File(Path);
+        try {
+            PrintWriter printWriter1 = new PrintWriter(file);
+            printWriter1.close();
+            PrintWriter printWriter = new PrintWriter(file);
+            for (General general : generallessons){
+                printWriter.println(general.getLessonCode());
+            }
+            for (Special special : Speciallessons) {
+                printWriter.println(special.getLessonCode());
+            }
+            printWriter.close();
+            printWriter.flush();
+        }
+        catch (Exception e){}
         if (choice == 1) {
-
             System.out.println("You Have been Register for " + ((int)generallessons.size() + (int)Speciallessons.size())+ " Lesson And " + GetUnit() + " unit:");
             for(General general : generallessons){
                 System.out.println(general.getLessonName() + " " + general.getLessonCode()  + " " + general.getTeacherName() + " " + general.getCapacity() + " " + general.getClassDay() +  " " + general.getStartOfClass() + " " + general.getEndOfClass() + " "  + general.getExamDay() + " " + general.getStartOfExam() + " " + general.getEndOfExam() + " " +  general.getUnit()) ;

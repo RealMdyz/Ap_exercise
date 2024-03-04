@@ -17,16 +17,16 @@ public class CliConnector {
         System.out.println("Are you a Admin or a Student!?");
         String username = scanner.next();
         scanner.nextLine();
-        // sign in:
-        if (username.equalsIgnoreCase("Student")) {
+        if (username.equals("Student")) {
             student.init();
         }
-        else if (username.equalsIgnoreCase("Admin")) {
+        else if (username.equals("Admin")) {
             admin.init();
         }
         else {
             init();
         }
+
 
     }
 }
