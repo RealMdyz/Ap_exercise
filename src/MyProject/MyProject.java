@@ -38,8 +38,8 @@ public class MyProject {
         special1.setLessonCode("24215");
         special1.setExamDay("12-April");
         special1.setClassDay("Saturday-Monday");
-        special1.setStartOfClass(8);
-        special1.setEndOfClass(9);
+        special1.setStartOfClass(10);
+        special1.setEndOfClass(11);
         special1.setStartOfExam(9);
         special1.setEndOfExam(14);
         special1.setUnit(3);
@@ -87,7 +87,7 @@ public class MyProject {
         specialPH.setEndOfClass(12);
         specialPH.setStartOfExam(9);
         specialPH.setEndOfExam(14);
-        specialPH.setUnit(3);
+        specialPH.setUnit(4);
         sttuf.AddSpecial(specialPH);
 
         Special specialPH1 = new Special(sttuf);

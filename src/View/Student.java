@@ -72,13 +72,15 @@ public class Student {
         int choice = scanner.nextInt();
         scanner.nextLine();
         if (choice == 1) {
-            System.out.println("You Have been Register for " + ((int)generallessons.size() + (int)Speciallessons.size())+ " Lesson :");
+
+            System.out.println("You Have been Register for " + ((int)generallessons.size() + (int)Speciallessons.size())+ " Lesson And " + GetUnit() + " unit:");
             for(General general : generallessons){
-                System.out.println(general.getLessonName() + " " + general.getLessonCode() + " " + general.getTeacherName());
+                System.out.println(general.getLessonName() + " " + general.getLessonCode()  + " " + general.getTeacherName() + " " + general.getCapacity() + " " + general.getClassDay() +  " " + general.getStartOfClass() + " " + general.getEndOfClass() + " "  + general.getExamDay() + " " + general.getStartOfExam() + " " + general.getEndOfExam() + " " +  general.getUnit()) ;
             }
             for(Special special : Speciallessons){
-                System.out.println(special.getLessonName() + " " + special.getLessonCode() + " " + special.getTeacherName());
+                System.out.println(special.getLessonName() + " " + special.getLessonCode()  + " " + special.getTeacherName() + " " + special.getCapacity() + " " + special.getClassDay() +  " " + special.getStartOfClass() + " " + special.getEndOfClass() + " "  + special.getExamDay() + " " + special.getStartOfExam() + " " + special.getEndOfExam() + " " +  special.getUnit());
             }
+            init();
         }
         else if (choice == 2) {
             List_OF_ALL_COLLEGES();
@@ -89,6 +91,16 @@ public class Student {
         else {
             init();
         }
+    }
+    public int GetUnit(){
+        int unit = 0;
+        for(General general : generallessons){
+            unit += general.getUnit();
+        }
+        for(Special special : Speciallessons){
+            unit += special.getUnit();
+        }
+        return unit;
     }
     public void List_OF_ALL_COLLEGES(){
         ArrayList<String> Colleges = new ArrayList<>();
@@ -127,12 +139,12 @@ public class Student {
     public void List_All_OF_THE_LESSON_OF_A_COLLEGE(String CollegeName){
         for(General general : sttuf.getGenerals()){
             if(general.getCollegeName().equals(CollegeName)){
-                System.out.println(general.getLessonName() + " " + general.getLessonCode()  + " " + general.getTeacherName() + " " + general.getCapacity() + " " + general.getClassDay() +  " " + general.getStartOfClass() + " " + general.getEndOfClass() + " "  + general.getExamDay() + " " + general.getStartOfExam() + " " + general.getEndOfExam()) ;
+                System.out.println(general.getLessonName() + " " + general.getLessonCode()  + " " + general.getTeacherName() + " " + general.getCapacity() + " " + general.getClassDay() +  " " + general.getStartOfClass() + " " + general.getEndOfClass() + " "  + general.getExamDay() + " " + general.getStartOfExam() + " " + general.getEndOfExam() + " " +  general.getUnit()) ;
             }
         }
         for(Special special : sttuf.getSpecials()){
             if(special.getCollegeName().equals(CollegeName)){
-                System.out.println(special.getLessonName() + " " + special.getLessonCode()  + " " + special.getTeacherName() + " " + special.getCapacity() + " " + special.getClassDay() +  " " + special.getStartOfClass() + " " + special.getEndOfClass() + " "  + special.getExamDay() + " " + special.getStartOfExam() + " " + special.getEndOfExam());            }
+                System.out.println(special.getLessonName() + " " + special.getLessonCode()  + " " + special.getTeacherName() + " " + special.getCapacity() + " " + special.getClassDay() +  " " + special.getStartOfClass() + " " + special.getEndOfClass() + " "  + special.getExamDay() + " " + special.getStartOfExam() + " " + special.getEndOfExam()+ " " +  special.getUnit());            }
         }
         System.out.println("Do you Want to Get Any OF Them?! \n 1- Yes \n 2- No");
         Scanner scanner = new Scanner(System.in);
@@ -199,7 +211,10 @@ public class Student {
     }
 
     public int getCountOfgeneral() {
-        return countOfgeneral;
+        int x = 0;
+        for (General general : generallessons)
+            x += general.getUnit();
+        return  x;
     }
 
     public void setCountOfgeneral(int countOfgeneral) {
@@ -215,7 +230,10 @@ public class Student {
     }
 
     public int getCountOfspecil() {
-        return countOfspecil;
+        int x = 0;
+        for (Special special : Speciallessons)
+            x += special.getUnit();
+        return  x;
     }
 
     public void setCountOfspecil(int countOfspecil) {
@@ -233,4 +251,21 @@ public class Student {
     public void RemoveGeneral(General general){
         generallessons.remove(general);
     }
+
+    public String getEsm() {
+        return esm;
+    }
+
+    public void setEsm(String esm) {
+        this.esm = esm;
+    }
+
+    public ArrayList<General> getGenerallessons() {
+        return generallessons;
+    }
+
+    public ArrayList<Special> getSpeciallessons() {
+        return Speciallessons;
+    }
+
 }

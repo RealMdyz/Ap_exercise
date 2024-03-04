@@ -27,7 +27,13 @@ public class Sttuf {
     public boolean AddStuSp(String CodeOfStudent, Special special){
         for(Student student : AllofStudents){
             if(student.getCode().equals(CodeOfStudent)){
-                if(student.getCountOfgeneral() + student.getCountOfspecil() + special.getUnit()> 20){
+                int unit = 0;
+                for(General general1 : student.getGenerallessons())
+                    unit += general1.getUnit();
+                for (Special special1 : student.getSpeciallessons())
+                    unit += special1.getUnit();
+
+                if(unit + special.getUnit()> 20){
                     System.out.println("\nSorry you Cant have more than 20 Unit!\n");
                     return false;
                 }
@@ -40,6 +46,7 @@ public class Sttuf {
                     return false;
                 }
                 special.setCapacity(special.getCapacity() - 1);
+                student.AddSpecial(special);
                 System.out.println("\n Done!\n");
                 return true;
             }
@@ -50,7 +57,13 @@ public class Sttuf {
     public boolean AddStuSpFromSt(String CodeOfStudent, Special special){
         for(Student student : AllofStudents){
             if(student.getCode().equals(CodeOfStudent)){
-                if(student.getCountOfgeneral() + student.getCountOfspecil() + special.getUnit()> 20){
+                int unit = 0;
+                for(General general1 : student.getGenerallessons())
+                    unit += general1.getUnit();
+                for (Special special1 : student.getSpeciallessons())
+                    unit += special1.getUnit();
+
+                if(unit + special.getUnit()> 20){
                     System.out.println("\nSorry you Cant have more than 20 Unit!\n");
                     return false;
                 }
@@ -62,7 +75,9 @@ public class Sttuf {
                     System.out.println("\nSorry you Cant have this Lesson because Two of your courses overlap!!\n");
                     return false;
                 }
+
                 special.setCapacity(special.getCapacity() - 1);
+                student.AddSpecial(special);
                 System.out.println("\n Done!\n");
                 return true;
             }
@@ -74,7 +89,13 @@ public class Sttuf {
     public boolean AddStuGn(String CodeOfStudent, General general){
         for(Student student : AllofStudents){
             if(student.getCode().equals(CodeOfStudent)){
-                if(student.getCountOfgeneral() + student.getCountOfspecil() + general.getUnit()> 20){
+                int unit = 0;
+                for(General general1 : student.getGenerallessons())
+                    unit += general1.getUnit();
+                for (Special special1 : student.getSpeciallessons())
+                    unit += special1.getUnit();
+
+                if(unit + general.getUnit()> 20){
                     System.out.println("\nSorry you Cant have more than 20 Unit!\n");
                     return false;
                 }
@@ -86,7 +107,12 @@ public class Sttuf {
                     System.out.println("\nSorry you Cant have this Lesson because Two of your courses overlap!!\n");
                     return false;
                 }
+                if(student.getCountOfgeneral() + general.getUnit() > 5){
+                    System.out.println("You Cant Have More Than 5 General Unit!");
+                    return false;
+                }
                 general.setCapacity(general.getCapacity() - 1);
+                student.AddGeneral(general);
                 System.out.println("\n Done!\n");
                 return true;
             }
@@ -97,9 +123,13 @@ public class Sttuf {
     public boolean AddStuGnFromSt(String CodeOfStudent, General general){
 
         for(Student student : AllofStudents){
-            System.out.println(student.getCode() + " " + CodeOfStudent);
             if(student.getCode().equals(CodeOfStudent)){
-                if(student.getCountOfgeneral() + student.getCountOfspecil() + general.getUnit()> 20){
+                int unit = 0;
+                for(General general1 : student.getGenerallessons())
+                    unit += general1.getUnit();
+                for (Special special1 : student.getSpeciallessons())
+                    unit += special1.getUnit();
+                if(unit + general.getUnit()> 20){
                     System.out.println("\nSorry you Cant have more than 20 Unit!\n");
                     return false;
                 }
@@ -111,7 +141,12 @@ public class Sttuf {
                     System.out.println("\nSorry you Cant have this Lesson because Two of your courses overlap!!\n");
                     return false;
                 }
+                if(student.getCountOfgeneral() + general.getUnit() > 5){
+                    System.out.println("You Cant Have More Than 5 General Unit!");
+                    return false;
+                }
                 general.setCapacity(general.getCapacity() - 1);
+                student.AddGeneral(general);
                 System.out.println("\n Done!\n");
                 return true;
             }

@@ -30,7 +30,7 @@ public class General extends Course{
             }
         }
     }
-    public boolean AddStu(String CodeOfStudent, Sttuf sttuf, General general){
+    /*public boolean AddStu(String CodeOfStudent, Sttuf sttuf, General general){
         for(Student student : sttuf.getAllofStudents()){
             if(student.getCode().equals(CodeOfStudent)){
                 if(student.getCountOfgeneral() + student.getCountOfspecil() + Unit > 20){
@@ -58,7 +58,7 @@ public class General extends Course{
         }
         System.out.println("You are Not Register to The System !");
         return false;
-    }
+    }*/
     public String getCollegeName() {
         return CollegeName;
     }
