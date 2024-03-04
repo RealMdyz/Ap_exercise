@@ -255,15 +255,12 @@ public class Student {
     public String getEsm() {
         return esm;
     }
-
     public void setEsm(String esm) {
         this.esm = esm;
     }
-
     public ArrayList<General> getGenerallessons() {
         return generallessons;
     }
-
     public ArrayList<Special> getSpeciallessons() {
         return Speciallessons;
     }

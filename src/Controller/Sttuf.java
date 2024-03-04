@@ -47,6 +47,7 @@ public class Sttuf {
                 }
                 special.setCapacity(special.getCapacity() - 1);
                 student.AddSpecial(special);
+                special.addStudent(student);
                 System.out.println("\n Done!\n");
                 return true;
             }
@@ -78,6 +79,7 @@ public class Sttuf {
 
                 special.setCapacity(special.getCapacity() - 1);
                 student.AddSpecial(special);
+                special.addStudent(student);
                 System.out.println("\n Done!\n");
                 return true;
             }
@@ -113,6 +115,7 @@ public class Sttuf {
                 }
                 general.setCapacity(general.getCapacity() - 1);
                 student.AddGeneral(general);
+                general.addStudent(student);
                 System.out.println("\n Done!\n");
                 return true;
             }
@@ -147,6 +150,7 @@ public class Sttuf {
                 }
                 general.setCapacity(general.getCapacity() - 1);
                 student.AddGeneral(general);
+                general.addStudent(student);
                 System.out.println("\n Done!\n");
                 return true;
             }
