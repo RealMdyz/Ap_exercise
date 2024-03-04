@@ -6,6 +6,8 @@ import Course.Course;
 import Course.General;
 import Course.Special;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,7 +28,7 @@ public class Admin {
             System.out.println("Its Not Correct !");
             cliConnector.init();
         }
-        System.out.println("you have entered as a Admin\n what do you want to do:\n 0- back\n 1- list of colleges \n 2- List Of Students");
+        System.out.println("you have entered as a Admin\n what do you want to do:\n 0- back\n 1- list of colleges \n 2- List Of Students\n 3- export\n 4- import");
         int choice = scanner.nextInt();
         scanner.nextLine();
         if (choice == 0) {
@@ -41,6 +43,96 @@ public class Admin {
                 System.out.println(student.getName() + " " + student.getCode());
             }
             init();
+        }
+        else if(choice == 4){
+            System.out.println("Please Enter the Path:(Exp:src/File/Lesson.txt)");
+            String Path = scanner.next();
+            File file = new File(Path);
+            try {
+                Scanner scanner1 = new Scanner(file);
+                while(scanner1.hasNextLine()){
+                   String x = scanner1.next();
+                   if(x.equals("G")){
+                       General general = new General(sttuf);
+                       general.setCollegeName(scanner1.next());
+                       general.setLessonName(scanner1.next());
+                       general.setLessonCode(scanner1.next());
+                       general.setTeacherName(scanner1.next());
+                       general.setCapacity(scanner1.nextInt());
+                       general.setUnit(scanner1.nextInt());
+                       general.setClassDay(scanner1.next());
+                       general.setStartOfClass(scanner1.nextInt());
+                       general.setEndOfClass(scanner1.nextInt());
+                       general.setExamDay(scanner1.next());
+                       general.setStartOfExam(scanner1.nextInt());
+                       general.setEndOfExam(scanner1.nextInt());
+                       sttuf.AddGeneral(general);
+                   }
+                   else if(x.equals("S")){
+                       Special special = new Special(sttuf);
+                       special.setCollegeName(scanner1.next());
+                       special.setLessonName(scanner1.next());
+                       special.setLessonCode(scanner1.next());
+                       special.setTeacherName(scanner1.next());
+                       special.setCapacity(scanner1.nextInt());
+                       special.setUnit(scanner1.nextInt());
+                       special.setClassDay(scanner1.next());
+                       special.setStartOfClass(scanner1.nextInt());
+                       special.setEndOfClass(scanner1.nextInt());
+                       special.setExamDay(scanner1.next());
+                       special.setStartOfExam(scanner1.nextInt());
+                       special.setEndOfExam(scanner1.nextInt());
+                       sttuf.AddSpecial(special);
+                   }
+                }
+            }
+            catch (Exception e){}
+            init();
+        }
+        else if(choice == 3){
+            System.out.println("Please Enter the Path:(Exp:src/File/Lesson.txt)");
+            String Path = scanner.next();
+            File file = new File(Path);
+            try{
+                PrintWriter printWriter1 = new PrintWriter(file);
+                printWriter1.close();
+                PrintWriter printWriter = new PrintWriter(file);
+                for(General general : sttuf.getGenerals()){
+                    printWriter.println("G");
+                    printWriter.println(general.getCollegeName());
+                    printWriter.println(general.getLessonName());
+                    printWriter.println(general.getLessonCode());
+                    printWriter.println(general.getTeacherName());
+                    printWriter.println(general.getCapacity());
+                    printWriter.println(general.getUnit());
+                    printWriter.println(general.getClassDay());
+                    printWriter.println(general.getStartOfClass());
+                    printWriter.println(general.getEndOfClass());
+                    printWriter.println(general.getExamDay());
+                    printWriter.println(general.getStartOfExam());
+                    printWriter.println(general.getEndOfExam());
+                }
+                for(Special special : sttuf.getSpecials()){
+                    printWriter.println("S");
+                    printWriter.println(special.getCollegeName());
+                    printWriter.println(special.getLessonName());
+                    printWriter.println(special.getLessonCode());
+                    printWriter.println(special.getTeacherName());
+                    printWriter.println(special.getCapacity());
+                    printWriter.println(special.getUnit());
+                    printWriter.println(special.getClassDay());
+                    printWriter.println(special.getStartOfClass());
+                    printWriter.println(special.getEndOfClass());
+                    printWriter.println(special.getExamDay());
+                    printWriter.println(special.getStartOfExam());
+                    printWriter.println(special.getEndOfExam());
+                }
+                printWriter.close();
+                printWriter.flush();
+                init();
+            }
+            catch (Exception e){}
+
         }
         else {
             init();

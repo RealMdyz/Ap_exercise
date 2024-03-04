@@ -14,7 +14,7 @@ public class CliConnector {
         Scanner scanner = new Scanner(System.in);
         Student student = new Student(sttuf);
         Admin admin = new Admin(sttuf);
-        System.out.println("Are you a Admin or a Student !?");
+        System.out.println("Are you a Admin or a Student!?");
         String username = scanner.next();
         scanner.nextLine();
         // sign in:
@@ -27,5 +27,6 @@ public class CliConnector {
         else {
             init();
         }
+
     }
 }

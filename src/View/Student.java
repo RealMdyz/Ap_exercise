@@ -54,7 +54,7 @@ public class Student {
     }
     public void init(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("you have entered as a Student\n 1- Sing up \n 2- Sing in \n 0- back");
+        System.out.println("you have entered as a Student\n 1- Sign up \n 2- Sign in \n 0- back");
         String s = scanner.nextLine();
         if(s.equals("1")){
             Register();
