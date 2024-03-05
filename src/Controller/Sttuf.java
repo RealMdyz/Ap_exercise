@@ -16,7 +16,7 @@ public class Sttuf {
     public boolean AddStudnet(Student student){
         for(Student student1 : AllofStudents){
             if(student1.getName().equals(student.getName()) && student1.getCode().equals(student.getCode())){
-                System.out.println("You Have Been Register Before!");
+                System.out.println("You Have Been Register Before");
                 return false;
             }
         }

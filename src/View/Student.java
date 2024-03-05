@@ -2,6 +2,8 @@ package View;
 
 import Controller.*;
 import Course.*;
+
+import javax.print.attribute.standard.MediaSize;
 import java.io.File;
 import java.io.File;
 import java.io.PrintWriter;
@@ -13,7 +15,7 @@ import java.util.SortedMap;
 
 public class Student {
 
-    String PassWord, Name, Code, esm;
+    String PassWord, Code, Name;
 
     ArrayList<General> generallessons = new ArrayList<>();
     ArrayList<Special> Speciallessons = new ArrayList<>();
@@ -38,27 +40,28 @@ public class Student {
         student1.setName(Esm);
         student1.setPassWord(Pas);
         student1.setCode(Code1);
-        boolean x = sttuf.AddStudnet(student1);
-        if(x){
-            File userFile = new File(relativePath + Esm + ".txt");
-            try {
-                userFile.createNewFile();
+        File userFile = new File(relativePath + Esm + Code1 + ".txt");
+        try {
+            if(userFile.createNewFile()) {
+                sttuf.AddStudnet(student1);
             }
-            catch (Exception e){
-
+            else {
+                sttuf.AddStudnet(student1);
             }
         }
+        catch (Exception e){
 
+        }
     }
     public boolean CheckValidation(){
         String  pas;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please Enter your Name:");
-        esm = scanner.next();
+        Name = scanner.next();
         System.out.println("Please Enter your PassWord:");
         pas = scanner.next();
         for (Student student : sttuf.getAllofStudents()){
-            if(student.getName().equals(esm) && student.getPassWord().equals(pas)){
+            if(student.getName().equals(Name) && student.getPassWord().equals(pas)){
                 return true;
             }
         }
@@ -79,24 +82,32 @@ public class Student {
         else if(!s.equals("2")){
             cliConnector.init();
         }
-
-        System.out.println("you have entered as a " + esm +"\n what do you want to do:\n 0- back\n 1- List of My lesson\n 2- List of Available Colleges");
+        for(Student student : sttuf.getAllofStudents()){
+            if(student.getName().equals(Name)){
+                this.Code = student.getCode();
+                break;
+            }
+        }
+        System.out.println("you have entered as a " + Name +"\n what do you want to do:\n 0- back\n 1- List of My lesson\n 2- List of Available Colleges");
         int choice = scanner.nextInt();
         scanner.nextLine();
-        String Path = relativePath + esm + ".txt";
+        String Path = relativePath + Name + Code + ".txt";
         File file = new File(Path);
         try {
-            PrintWriter printWriter1 = new PrintWriter(file);
-            printWriter1.close();
-            PrintWriter printWriter = new PrintWriter(file);
-            for (General general : generallessons){
-                printWriter.println(general.getLessonCode());
+            Scanner scanner1 = new Scanner(file);
+            while(scanner1.hasNextLine()){
+                String CodeOFLessonINfile = scanner1.next();
+                for (General general : sttuf.getGenerals()){
+                    if(general.getLessonCode().equals(CodeOFLessonINfile) && !generallessons.contains(general)){
+                        generallessons.add(general);
+                    }
+                }
+                for (Special special : sttuf.getSpecials()){
+                    if(special.getLessonCode().equals(CodeOFLessonINfile) && !generallessons.contains(special)){
+                        Speciallessons.add(special);
+                    }
+                }
             }
-            for (Special special : Speciallessons) {
-                printWriter.println(special.getLessonCode());
-            }
-            printWriter.close();
-            printWriter.flush();
         }
         catch (Exception e){}
         if (choice == 1) {
@@ -111,6 +122,22 @@ public class Student {
         }
         else if (choice == 2) {
             List_OF_ALL_COLLEGES();
+            try {
+                Path = relativePath + Name + ".txt";
+                PrintWriter printWriter1 = new PrintWriter(file);
+                printWriter1.close();
+                PrintWriter printWriter = new PrintWriter(file);
+                for (General general : generallessons){
+                    printWriter.println(general.getLessonCode());
+                }
+                for (Special special : Speciallessons) {
+                    printWriter.println(special.getLessonCode());
+                }
+                printWriter.close();
+                printWriter.flush();
+            }
+            catch (Exception e){}
+            init();
         }
         else if (choice == 0) {
             cliConnector.init();
@@ -162,6 +189,7 @@ public class Student {
         Scanner scanner = new Scanner(System.in);
         String CollegeName = scanner.next();
         List_All_OF_THE_LESSON_OF_A_COLLEGE(CollegeName);
+        return;
     }
     public void List_All_OF_THE_LESSON_OF_A_COLLEGE(String CollegeName){
         for(General general : sttuf.getGenerals()){
@@ -194,7 +222,7 @@ public class Student {
                         generallessons.add(general);
                 }
             }
-            init();
+            return;
         }
         else {
           init();
@@ -280,10 +308,10 @@ public class Student {
     }
 
     public String getEsm() {
-        return esm;
+        return Name;
     }
     public void setEsm(String esm) {
-        this.esm = esm;
+        this.Name = esm;
     }
     public ArrayList<General> getGenerallessons() {
         return generallessons;
