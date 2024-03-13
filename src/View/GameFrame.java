@@ -10,11 +10,16 @@ public class GameFrame extends JFrame {
 
 
     BackGroundPanel backGroundPanel;
+
+    private final static int BallStartX = 270;
+    private final static int BallStartY = 50;
     JPanel panel;
     JPanel gamePanel;
-
-    private ArrayList<Ball> balls = new ArrayList<>();
+    Ball ball;
+    public int CountOFBalls = 1;
     private ArrayList<Block> blocks = new ArrayList<>();
+
+
     public GameFrame(){
         setTitle("Bricks Breaker");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,5 +50,10 @@ public class GameFrame extends JFrame {
 
         panel.add(gamePanel);
         panel.add(backGroundPanel);
+
+        ball = new Ball(BallStartX, BallStartY);
+        ball.setLayout(null);
+        gamePanel.add(ball);
+
     }
 }

@@ -13,16 +13,14 @@ public class BackGroundPanel extends JPanel {
 
     public BackGroundPanel() {
         try {
-            image = ImageIO.read(new File("background.jpeg"));
+            image = ImageIO.read(new File("src/background.jpeg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         this.setBounds(0,0,600,800);
-
     }
 
     public void paintComponent(Graphics g) {
-
         super.paintComponent(g);
         if (image != null) {
             g.drawImage(image, 0, 0, 600, 800, null);
