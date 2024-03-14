@@ -4,10 +4,13 @@ import java.awt.*;
 
 public class Block extends ObjectsInGame {
 
-    public Block(int x, int y){
+    int Power;
+
+    public Block(int x, int y, int Power){
         super(x, y);
-        this.setHeight(30);
-        this.setWidth(40);
+        this.Power = Power;
+        this.setHeight(100);
+        this.setWidth(150);
         this.setSize(getWidth(),getHeight());
 
     }

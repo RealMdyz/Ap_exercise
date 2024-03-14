@@ -4,6 +4,9 @@ import Model.Ball;
 import Model.Block;
 
 import javax.swing.*;
+import javax.swing.*;
+import java.awt.*;
+
 import java.util.ArrayList;
 
 public class GameFrame extends JFrame {
@@ -12,13 +15,13 @@ public class GameFrame extends JFrame {
     BackGroundPanel backGroundPanel;
 
     private final static int BallStartX = 270;
-    private final static int BallStartY = 50;
+    private final static int BallStartY = 650;
+
     JPanel panel;
     JPanel gamePanel;
     Ball ball;
     public int CountOFBalls = 1;
     private ArrayList<Block> blocks = new ArrayList<>();
-
 
     public GameFrame(){
         setTitle("Bricks Breaker");
@@ -53,7 +56,16 @@ public class GameFrame extends JFrame {
 
         ball = new Ball(BallStartX, BallStartY);
         ball.setLayout(null);
-        gamePanel.add(ball);
 
+        gamePanel.add(ball);
+        gamePanel.repaint();
+    }
+
+    public Ball getBall() {
+        return ball;
+    }
+
+    public void setBall(Ball ball) {
+        this.ball = ball;
     }
 }

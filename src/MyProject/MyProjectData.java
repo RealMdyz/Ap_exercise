@@ -17,7 +17,7 @@ public class MyProjectData {
 
     private void addImages(){
         try {
-            String pathBackground = "src/Ball1.jpg";
+            String pathBackground = "src/Ball1.png";
             File fileBackground = new File(pathBackground);
             Ball = ImageIO.read(fileBackground);
 
