@@ -26,6 +26,7 @@ public class Ball extends ObjectsInGame implements Moveable{
     public void move(){
         this.setX(this.getX() + xVelocity);
         this.setY(this.getY() + yVelocity);
+
     }
     @Override
     public void paintComponent(Graphics g) {
@@ -33,7 +34,6 @@ public class Ball extends ObjectsInGame implements Moveable{
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
         g2D.drawImage(background, 0, 0, 50, 40, null);
-
 
     }
 
