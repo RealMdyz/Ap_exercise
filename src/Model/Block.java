@@ -13,9 +13,9 @@ public class Block extends ObjectsInGame implements Moveable{
         setX(x);
         setY(y);
         this.Power = Power;
-        this.setHeight(800);
-        this.setWidth(600);
-        this.setSize(getWidth(),getHeight());
+        this.setHeight(50);
+        this.setWidth(100);
+        setSize(getWidth(),getHeight());
 
     }
 
@@ -27,6 +27,7 @@ public class Block extends ObjectsInGame implements Moveable{
         // Draw rectangle
         g.setColor(Color.BLUE);
         g.fillRect(getX(), getY(), 100, 50);
+
 
         // Draw number
         g.setColor(Color.WHITE);
@@ -44,8 +45,9 @@ public class Block extends ObjectsInGame implements Moveable{
     public void move() {
 
         this.setX(this.getX() + xVelocity);
+        this.repaint();
         this.setY(this.getY() + yVelocity);
-        repaint();
+        this.repaint();
     }
 
 

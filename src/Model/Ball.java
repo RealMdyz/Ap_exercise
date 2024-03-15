@@ -5,20 +5,21 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentListener;
+import java.awt.geom.Arc2D;
 
 public class Ball extends ObjectsInGame implements Moveable{
 
     private int xVelocity = 0;
     private int yVelocity = 0;
-    private final int diameter = 50;
+    private final int radius = 15;
 
 
     public Ball(int x, int y){
         super(x, y);
         setX(x);
         setY(y);
-        this.setWidth(60);
-        this.setHeight(60);
+        this.setWidth(30);
+        this.setHeight(30);
         setSize(getWidth(), getHeight());
         background = MyProjectData.getProjectData().getBall();
 
@@ -36,8 +37,9 @@ public class Ball extends ObjectsInGame implements Moveable{
 
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
-        g2D.drawImage(background, 0, 0, 50, 40, null);
-
+        g2D.drawImage(background, 0, 0, 30, 30, null);
+        /*g2D.fill(new Arc2D.Double(getX() - radius, getY() - radius, 2 * radius, 2 * radius, 0, 360, Arc2D.PIE));
+        g2D.dispose();*/
     }
     public void check(){
         if(getY() > 650){
@@ -45,7 +47,6 @@ public class Ball extends ObjectsInGame implements Moveable{
             yVelocity = 0;
             setY(650);
         }
-
     }
 
    public void ChangeAngle(int x, int y){

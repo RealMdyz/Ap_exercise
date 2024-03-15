@@ -35,11 +35,16 @@ public class GameLoop extends Thread{
             }
 
         }
-
+        for(Block block : game.getGameFrame().getBlocks()){
+            if(game.getIntersection().intersct(block)){
+                game.getGameFrame().Point += 1;
+            }
+        }
+        //game.getGameFrame().removeBlock();
 
         game.getGameFrame().repaint();
         try {
-            Thread.sleep(30);
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

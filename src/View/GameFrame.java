@@ -78,6 +78,7 @@ public class GameFrame extends JFrame {
         int x = 0;
         for(int i = 0; i < Cnt; i++){
             int u = (int)(Math.random() * 5);
+            u = 0;
             x += (u * 50);
             Block block = new Block(x, 0, Level);
             blocks.add(block);
@@ -85,8 +86,17 @@ public class GameFrame extends JFrame {
         }
 
     }
-    public void removeBlock(Block block){
-        blocks.remove(block);
+    public void removeBlock(){
+        for(int i = 0; i < 200; i++){
+            Block block1 = new Block(0, 0, 0);
+            for(Block block : blocks){
+                if(block.Power == 0){
+                    block1 = block;
+                }
+            }
+            blocks.remove(block1);
+        }
+        return;
     }
 
     public ArrayList<Block> getBlocks() {
