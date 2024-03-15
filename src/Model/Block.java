@@ -4,9 +4,9 @@ import java.awt.*;
 
 public class Block extends ObjectsInGame implements Moveable{
 
-    int Power;
+    public int Power;
     private int xVelocity = 0;
-    private int yVelocity = 5;
+    private int yVelocity = 25;
 
     public Block(int x, int y, int Power){
         super(x, y);
@@ -42,6 +42,7 @@ public class Block extends ObjectsInGame implements Moveable{
 
     @Override
     public void move() {
+
         this.setX(this.getX() + xVelocity);
         this.setY(this.getY() + yVelocity);
         repaint();

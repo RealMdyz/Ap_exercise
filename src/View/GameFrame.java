@@ -23,6 +23,7 @@ public class GameFrame extends JFrame {
     public int CountOFBalls = 1;
     public boolean isMoveBall = false;
     public int Level = 0;
+    public int Point = 0;
 
     private ArrayList<Block> blocks = new ArrayList<>();
 
@@ -61,7 +62,6 @@ public class GameFrame extends JFrame {
         ball.setLayout(null);
 
         gamePanel.add(ball);
-
         gamePanel.repaint();
     }
 
@@ -77,7 +77,6 @@ public class GameFrame extends JFrame {
         Level += 1;
         int x = 0;
         for(int i = 0; i < Cnt; i++){
-
             int u = (int)(Math.random() * 5);
             x += (u * 50);
             Block block = new Block(x, 0, Level);
@@ -85,6 +84,9 @@ public class GameFrame extends JFrame {
             gamePanel.add(block);
         }
 
+    }
+    public void removeBlock(Block block){
+        blocks.remove(block);
     }
 
     public ArrayList<Block> getBlocks() {

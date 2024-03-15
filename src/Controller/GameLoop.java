@@ -1,16 +1,20 @@
 package Controller;
 
+import Model.Ball;
 import Model.Block;
 import Model.Game;
 
-public class GameLoop extends Thread{
+import java.awt.*;
 
+public class GameLoop extends Thread{
 
     private Game game;
     int time = 0;
 
     public GameLoop(Game game){
         this.game = game;
+        this.game.getGameFrame().addRandomBlock();
+
     }
     public void run() {
         while (game.isGameRunning()) {
@@ -19,28 +23,31 @@ public class GameLoop extends Thread{
 
     }
     private void update() {
-
         game.getGameFrame().getBall().move();
+        game.getIntersection().intersectBall();
+        if(game.getGameFrame().getBall().getxVelocity() == game.getGameFrame().getBall().getyVelocity() && game.getGameFrame().getBall().getyVelocity() == 0){
+            if (game.getGameFrame().isMoveBall) {
+                for (Block block : game.getGameFrame().getBlocks()) {
+                    block.move();
+                }
+                game.getGameFrame().addRandomBlock();
+                game.getGameFrame().isMoveBall = false;
+            }
+
+        }
+
+
         game.getGameFrame().repaint();
         try {
-            Thread.sleep(100);
+            Thread.sleep(30);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
-        time += 100;
-        if(time == 500){
-            time = 0;
-            game.getGameFrame().addRandomBlock();
-        }
-        if(!game.getGameFrame().isMoveBall){
-            for(Block block : game.getGameFrame().getBlocks()){
-                block.move();
-            }
         }
 
 
 
     }
+
 
 
 
