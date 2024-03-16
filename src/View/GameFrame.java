@@ -16,6 +16,7 @@ public class GameFrame extends JFrame {
 
     private final static int BallStartX = 270;
     private final static int BallStartY = 650;
+    public final static int MaxNumberOFballs = 50;
 
     JPanel panel;
     JPanel gamePanel;
@@ -98,10 +99,11 @@ public class GameFrame extends JFrame {
         }
 
     }
-    public void addball(){
-        Ball ball1 = new Ball(BallStartX, BallStartY);
+    public void addball(int x, int y){
+        Ball ball1 = new Ball(x, y);
         ball1.setLayout(null);
         balls.add(ball1);
+
     }
     public void removeBlock(){
 

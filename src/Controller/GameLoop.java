@@ -44,8 +44,13 @@ public class GameLoop extends Thread{
                 }
                 game.getGameFrame().addInThisState = true;
                 game.getGameFrame().Stop = true;
-                game.getGameFrame().addball();
+                if(game.getGameFrame().getBalls().size() == 0){
+                    game.getGameFrame().addball(270, 650);
+                }
+                else
+                    game.getGameFrame().addball(game.getGameFrame().getBalls().getFirst().getX(), game.getGameFrame().getBalls().getFirst().getY());
                 game.getGameFrame().addRandomBlock();
+
             }
 
         }
@@ -60,13 +65,27 @@ public class GameLoop extends Thread{
                     ball.SetV(X, Y);
                 }
                 game.getGameFrame().Stop = false;
+                int u = game.getGameFrame().MaxNumberOFballs;
+                for (Ball ball : game.getGameFrame().getBalls()) {
+                    for(int i = 0; i < u; i++){
+                        ball.move();
+                        ball.intersectBall();
+                        try {
+                            Thread.sleep(2);
+                        }
+                        catch (Exception e){
+
+                        }
+                        game.getGameFrame().repaint();
+                    }
+                    u -= 5;
+                }
             }
             boolean CheckTheEnd = true;
-            for(Ball ball : game.getGameFrame().getBalls()){
+            for (Ball ball : game.getGameFrame().getBalls()) {
                 ball.move();
                 ball.intersectBall();
-
-                if(ball.getyVelocity() != 0 || ball.getxVelocity() != 0)
+                if (ball.getyVelocity() != 0 || ball.getxVelocity() != 0)
                     CheckTheEnd = false;
             }
 
@@ -81,10 +100,6 @@ public class GameLoop extends Thread{
                 game.getGameFrame().addInThisState = false;
             }
         }
-        try {
-            Thread.sleep(2);
-        }
-        catch (Exception e){}
 
 
 

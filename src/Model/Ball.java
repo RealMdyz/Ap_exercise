@@ -15,6 +15,10 @@ public class Ball extends ObjectsInGame implements Moveable{
 
 
 
+    private long LastMoveTime = 0;
+
+
+
 
     public Ball(int x, int y){
         super(x, y);
@@ -80,20 +84,27 @@ public class Ball extends ObjectsInGame implements Moveable{
         if(getX() <= 0){
             ChangeAngle(- getxVelocity(), getyVelocity());
         }
-        if(getX() >= 550){
+        if(getX() >= 570){
             ChangeAngle(- getxVelocity(), getyVelocity());
         }
-        if(getY() <= 0){
+        if(getY() <= 10){
             ChangeAngle(getxVelocity(), - getyVelocity());
         }
 
     }
     public void SetV(int x, int y){
         double angle = Math.atan2(- getY() + y, - getX() + x);
-        double velocityX = Math.cos(angle) * 5; // Adjust the velocity as needed
-        double velocityY = Math.sin(angle) * 5; // Adjust the velocity as needed
+        double velocityX = Math.cos(angle) * 2; // Adjust the velocity as needed
+        double velocityY = Math.sin(angle) * 2; // Adjust the velocity as needed
         setxVelocity((int)velocityX);
         setyVelocity((int)velocityY);
     }
 
+    public long getLastMoveTime() {
+        return LastMoveTime;
+    }
+
+    public void setLastMoveTime(long lastMoveTime) {
+        LastMoveTime = lastMoveTime;
+    }
 }
