@@ -14,7 +14,7 @@ public class Game {
 
         inputListener = new InputListener(gameFrame);
 
-        intersection = new Intersection(gameFrame.getBall());
+        intersection = new Intersection();
     }
 
 

@@ -3,14 +3,16 @@ package Controller;
 import Model.Ball;
 import Model.Block;
 
-public class Intersection {
-    private Ball ball;
+import java.awt.*;
 
-    public Intersection(Ball ball) {
-        this.ball = ball;
+public class Intersection {
+
+
+    public Intersection() {
+
     }
 
-    public void intersectBall(){
+    public void intersectBall(Ball ball){
         if(ball.getX() <= 0){
             ball.ChangeAngle(- ball.getxVelocity(), ball.getyVelocity());
         }
@@ -21,7 +23,8 @@ public class Intersection {
             ball.ChangeAngle(ball.getxVelocity(), - ball.getyVelocity());
         }
     }
-    public boolean intersct(Block block){
+    public boolean intersct(Block block, Ball ball){
+
         int object1Width = block.getWidth();
         int object1Height = block.getHeight();
         int object2Width = ball.getWidth();
@@ -37,22 +40,22 @@ public class Intersection {
         }
         int Rb1x = object1X + object1Width;
         int Rb1y = object1Y + object1Height;
-        if(Rb1y >= object2Y && (object1X + 15 <= object2X && object2X <= Rb1x - 15)){
+        if(Rb1y < object2Y && (object1X  <= object2X && object2X <= Rb1x )){
             block.Power -= 1;
             ball.ChangeAngle(ball.getxVelocity(), - ball.getyVelocity());
             return true;
         }
-        if(Rb1x >= object2X && (object1Y + 15 <= object2Y && object2Y <= Rb1y - 15)){
+        else if(Rb1x < object2X && (object1Y <= object2Y && object2Y <= Rb1y )){
             block.Power -= 1;
             ball.ChangeAngle(- ball.getxVelocity(),ball.getyVelocity());
             return true;
         }
-        if(object1Y >= object2Y && (object1X + 15 <= object2X && object2X <= Rb1x - 15)){
+        else if(object1Y > object2Y  && (object1X  <= object2X && object2X <= Rb1x )){
             block.Power -= 1;
             ball.ChangeAngle(ball.getxVelocity(), - ball.getyVelocity());
             return true;
         }
-        if(object1X >= object2X && (object1Y + 15 <= object2Y && object2Y <= Rb1y - 15)){
+        else if(object1X > object2X && (object1Y <= object2Y && object2Y <= Rb1y )){
             block.Power -= 1;
             ball.ChangeAngle(- ball.getxVelocity(),ball.getyVelocity());
             return true;

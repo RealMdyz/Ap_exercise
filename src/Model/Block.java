@@ -6,7 +6,7 @@ public class Block extends ObjectsInGame implements Moveable{
 
     public int Power;
     private int xVelocity = 0;
-    private int yVelocity = 25;
+    private int yVelocity = 50;
 
     public Block(int x, int y, int Power){
         super(x, y);
@@ -23,20 +23,20 @@ public class Block extends ObjectsInGame implements Moveable{
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);
-
+        Graphics2D g2D = (Graphics2D) g;
         // Draw rectangle
-        g.setColor(Color.BLUE);
-        g.fillRect(getX(), getY(), 100, 50);
+        g2D.setColor(Color.BLUE);
+        g2D.fillRect(0,0 , 100, 50);
 
 
         // Draw number
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 20));
+        g2D.setColor(Color.WHITE);
+        g2D.setFont(new Font("Arial", Font.BOLD, 20));
         String numberString = String.valueOf(Power);
-        FontMetrics fm = g.getFontMetrics();
+        FontMetrics fm = g2D.getFontMetrics();
         int x = (100 - fm.stringWidth(numberString)) / 2;
         int y = (50 - fm.getHeight()) / 2 + fm.getAscent();
-        g.drawString(numberString, getX() + x, getY() + y);
+        g2D.drawString(numberString, x, y);
 
     }
 

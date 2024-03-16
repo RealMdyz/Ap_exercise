@@ -21,11 +21,14 @@ public class GameFrame extends JFrame {
     JPanel gamePanel;
     Ball ball;
     public int CountOFBalls = 1;
-    public boolean isMoveBall = false;
+    public boolean onMove = false;
+    public boolean addInThisState = false;
+
     public int Level = 0;
     public int Point = 0;
 
     private ArrayList<Block> blocks = new ArrayList<>();
+    private ArrayList<Ball>  balls = new ArrayList<>();
 
     public GameFrame(){
         setTitle("Bricks Breaker");
@@ -58,10 +61,20 @@ public class GameFrame extends JFrame {
         panel.add(gamePanel);
         panel.add(backGroundPanel);
 
-        ball = new Ball(BallStartX, BallStartY);
-        ball.setLayout(null);
+        gamePanel.repaint();
+    }
 
-        gamePanel.add(ball);
+    public void AddballsToPanel(){
+        //System.out.println(balls.size());;
+        for(Ball ball1 : balls){
+            gamePanel.add(ball1);
+        }
+        gamePanel.repaint();
+    }
+    public void AddBlocksToPanel(){
+        for(Block block : blocks){
+            gamePanel.add(block);
+        }
         gamePanel.repaint();
     }
 
@@ -78,7 +91,6 @@ public class GameFrame extends JFrame {
         int x = 0;
         for(int i = 0; i < Cnt; i++){
             int u = (int)(Math.random() * 5);
-            u = 0;
             x += (u * 50);
             Block block = new Block(x, 0, Level);
             blocks.add(block);
@@ -86,24 +98,40 @@ public class GameFrame extends JFrame {
         }
 
     }
+    public void addball(){
+        Ball ball1 = new Ball(BallStartX, BallStartY);
+        ball1.setLayout(null);
+        balls.add(ball1);
+    }
     public void removeBlock(){
-        for(int i = 0; i < 200; i++){
-            Block block1 = new Block(0, 0, 0);
-            for(Block block : blocks){
-                if(block.Power == 0){
+
+        ArrayList<Block> blocks1;
+        blocks1 = blocks;
+        Block block1 = new Block(0, 0, 0);
+        for(Block block : blocks1){
+            if(block.Power == 0){
                     block1 = block;
-                }
             }
-            blocks.remove(block1);
         }
-        return;
+
     }
 
     public ArrayList<Block> getBlocks() {
         return blocks;
     }
+    public void RmB(Block block){
+        this.blocks.remove(block);
+    }
 
     public void setBlocks(ArrayList<Block> blocks) {
         this.blocks = blocks;
+    }
+
+    public ArrayList<Ball> getBalls() {
+        return balls;
+    }
+
+    public void setBalls(ArrayList<Ball> balls) {
+        this.balls = balls;
     }
 }
