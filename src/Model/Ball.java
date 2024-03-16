@@ -14,6 +14,8 @@ public class Ball extends ObjectsInGame implements Moveable{
     private final int radius = 15;
 
 
+
+
     public Ball(int x, int y){
         super(x, y);
         setX(x);
@@ -28,9 +30,10 @@ public class Ball extends ObjectsInGame implements Moveable{
     @Override
     public void move(){
 
-        this.setX(this.getX() + xVelocity);
-        this.setY(this.getY() + yVelocity);
+        this.setX(this.getX() + this.xVelocity);
+        this.setY(this.getY() + this.yVelocity);
         check();
+
     }
     @Override
     public void paintComponent(Graphics g) {
@@ -71,6 +74,26 @@ public class Ball extends ObjectsInGame implements Moveable{
 
     public void setyVelocity(int yVelocity) {
         this.yVelocity = yVelocity;
+    }
+
+    public void intersectBall(){
+        if(getX() <= 0){
+            ChangeAngle(- getxVelocity(), getyVelocity());
+        }
+        if(getX() >= 550){
+            ChangeAngle(- getxVelocity(), getyVelocity());
+        }
+        if(getY() <= 0){
+            ChangeAngle(getxVelocity(), - getyVelocity());
+        }
+
+    }
+    public void SetV(int x, int y){
+        double angle = Math.atan2(- getY() + y, - getX() + x);
+        double velocityX = Math.cos(angle) * 5; // Adjust the velocity as needed
+        double velocityY = Math.sin(angle) * 5; // Adjust the velocity as needed
+        setxVelocity((int)velocityX);
+        setyVelocity((int)velocityY);
     }
 
 }

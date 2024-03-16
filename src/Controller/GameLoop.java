@@ -36,44 +36,38 @@ public class GameLoop extends Thread{
         }*/
         game.getGameFrame().AddBlocksToPanel();
         game.getGameFrame().AddballsToPanel();
+
         if(!game.getGameFrame().onMove){
-            if(game.getGameFrame().addInThisState == false){
+            if(!game.getGameFrame().addInThisState){
                 for (Block block : game.getGameFrame().getBlocks()) {
                     block.move();
                 }
                 game.getGameFrame().addInThisState = true;
+                game.getGameFrame().Stop = true;
                 game.getGameFrame().addball();
                 game.getGameFrame().addRandomBlock();
-                if(game.getGameFrame().Level == 1){
-                    game.getInputListener().setMainball(game.getGameFrame().getBalls().getFirst());
-                }
-                System.out.println(game.getGameFrame().getBalls().size());
             }
 
-
         }
-        else{
+        else {
             game.getGameFrame().removeBlock();
-            boolean CheckOne = false;
             int X, Y;
             X = Y = 0;
-            for(Ball ball : game.getGameFrame().getBalls()){
-                if(!CheckOne){
-
-                    X = ball.getxVelocity();
-                    Y = ball.getyVelocity();
-                    CheckOne = true;
+            if(game.getGameFrame().Stop){
+                X = game.getInputListener().b[0];
+                Y = game.getInputListener().b[1];
+                for(Ball ball : game.getGameFrame().getBalls()){
+                    ball.SetV(X, Y);
                 }
-                ball.setyVelocity(Y);
-                ball.setxVelocity(X);
-
+                game.getGameFrame().Stop = false;
             }
             boolean CheckTheEnd = true;
             for(Ball ball : game.getGameFrame().getBalls()){
                 ball.move();
+                ball.intersectBall();
+
                 if(ball.getyVelocity() != 0 || ball.getxVelocity() != 0)
                     CheckTheEnd = false;
-                game.getIntersection().intersectBall(ball);
             }
 
             for(Block block : game.getGameFrame().getBlocks()){
@@ -87,6 +81,10 @@ public class GameLoop extends Thread{
                 game.getGameFrame().addInThisState = false;
             }
         }
+        try {
+            Thread.sleep(2);
+        }
+        catch (Exception e){}
 
 
 

@@ -16,35 +16,24 @@ public class InputListener {
     ActionMap actionMap;
     GameFrame gameFrame;
 
-    Ball Mainball;
 
+    public int[] b = new int[2];
     public InputListener(GameFrame gameFrame) {
         this.gameFrame = gameFrame;
         createMouseAction();
     }
     public void createMouseAction() {
+
         gameFrame.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
 
                 Point mousePoint = evt.getPoint();
-                if(mousePoint.y > 650)
-                    return;
-                double angle = Math.atan2(mousePoint.y - Mainball.getY(), mousePoint.x - Mainball.getX());
-                double velocityX = Math.cos(angle) * 5; // Adjust the velocity as needed
-                double velocityY = Math.sin(angle) * 5; // Adjust the velocity as needed
-                Mainball.setxVelocity((int)velocityX);
-                Mainball.setyVelocity((int)velocityY);
-               gameFrame.addInThisState = false;
-               gameFrame.onMove = true;
+                b[0] = mousePoint.x;
+                b[1] = mousePoint.y;
+                gameFrame.onMove = true;
             }
         });
+
     }
 
-    public Ball getMainball() {
-        return Mainball;
-    }
-
-    public void setMainball(Ball mainball) {
-        Mainball = mainball;
-    }
 }

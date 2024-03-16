@@ -28,7 +28,6 @@ public class Block extends ObjectsInGame implements Moveable{
         g2D.setColor(Color.BLUE);
         g2D.fillRect(0,0 , 100, 50);
 
-
         // Draw number
         g2D.setColor(Color.WHITE);
         g2D.setFont(new Font("Arial", Font.BOLD, 20));

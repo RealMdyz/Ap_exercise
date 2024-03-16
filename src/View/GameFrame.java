@@ -24,6 +24,7 @@ public class GameFrame extends JFrame {
     public boolean onMove = false;
     public boolean addInThisState = false;
 
+    public boolean Stop = false;
     public int Level = 0;
     public int Point = 0;
 
@@ -65,7 +66,6 @@ public class GameFrame extends JFrame {
     }
 
     public void AddballsToPanel(){
-        //System.out.println(balls.size());;
         for(Ball ball1 : balls){
             gamePanel.add(ball1);
         }

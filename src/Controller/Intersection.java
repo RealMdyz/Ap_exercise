@@ -11,18 +11,6 @@ public class Intersection {
     public Intersection() {
 
     }
-
-    public void intersectBall(Ball ball){
-        if(ball.getX() <= 0){
-            ball.ChangeAngle(- ball.getxVelocity(), ball.getyVelocity());
-        }
-        if(ball.getX() >= 548){
-            ball.ChangeAngle(- ball.getxVelocity(), ball.getyVelocity());
-        }
-        if(ball.getY() <= 0){
-            ball.ChangeAngle(ball.getxVelocity(), - ball.getyVelocity());
-        }
-    }
     public boolean intersct(Block block, Ball ball){
 
         int object1Width = block.getWidth();
