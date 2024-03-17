@@ -28,7 +28,7 @@ public class GameFrame extends JFrame {
     public boolean Stop = false;
     public int Level = 0;
     public int Point = 0;
-    private JLabel pointsLabel;
+    public JLabel pointsLabel;
 
     private ArrayList<Block> blocks = new ArrayList<>();
     private ArrayList<Ball>  balls = new ArrayList<>();
@@ -110,29 +110,13 @@ public class GameFrame extends JFrame {
         balls.add(ball1);
 
     }
-    public void removeBall(Block block) {
-        block.remove(block);
+    public void removeBlock(Block block) {
+        blocks.remove(block);
         gamePanel.remove(block);
+        AddBlocksToPanel();
         gamePanel.repaint();
     }
 
-    // Implement collision detection and point increase here
-    // This method should be called when collision occurs
-    public void handleCollision(Block block) {
-        // Reduce block power
-        block.reducePower();
-
-        // Increase points
-        Point++;
-
-        // Update points label
-        pointsLabel.setText("Points: " + Point);
-
-        // Check if the ball's power reaches zero
-        if (block.getPower() <= 0) {
-            removeBall(block);
-        }
-    }
 
     public ArrayList<Block> getBlocks() {
         return blocks;

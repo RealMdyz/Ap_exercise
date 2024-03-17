@@ -5,6 +5,7 @@ import Model.Block;
 import Model.Game;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GameLoop extends Thread{
 
@@ -78,10 +79,29 @@ public class GameLoop extends Thread{
             boolean CheckTheEnd = true;
             for (Ball ball : game.getGameFrame().getBalls()) {
                 ball.move();
+                int CountOfRemovedBlock = 0;
                 for(Block block : game.getGameFrame().getBlocks()){
-                    if(game.getIntersection().intersect(block, ball))
-                        game.getGameFrame().handleCollision(block);
+                    if(game.getIntersection().intersect(block, ball)){
+                        block.reducePower();
+                        game.getGameFrame().Point += 1;
+                        game.getGameFrame(). pointsLabel.setText("Points: " + game.getGameFrame().Point);
+                        if(block.Power == 0)
+                            CountOfRemovedBlock += 1;
+                    }
+
                 }
+
+                for(int i = 0; i < CountOfRemovedBlock;  i++){
+                    Block block = new Block(0, 0, -1);
+                    for(Block block1 : game.getGameFrame().getBlocks()){
+                        if(block1.Power == 0){
+                            block = block1;
+                        }
+                    }
+                    if(block.Power == 0)
+                        game.getGameFrame().removeBlock(block);
+                }
+
                 if (ball.getyVelocity() != 0 || ball.getxVelocity() != 0)
                     CheckTheEnd = false;
             }
