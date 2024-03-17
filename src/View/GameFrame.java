@@ -28,6 +28,7 @@ public class GameFrame extends JFrame {
     public boolean Stop = false;
     public int Level = 0;
     public int Point = 0;
+    private JLabel pointsLabel;
 
     private ArrayList<Block> blocks = new ArrayList<>();
     private ArrayList<Ball>  balls = new ArrayList<>();
@@ -50,6 +51,10 @@ public class GameFrame extends JFrame {
         panel.requestFocusInWindow();
         panel.setLayout(null);
         setContentPane(panel);
+
+        pointsLabel = new JLabel("Points: " + Point);
+        pointsLabel.setBounds(500, 700, 100, 50);
+        panel.add(pointsLabel);
 
         gamePanel = new JPanel();
         gamePanel.setBounds(0,0, 600, 800);
@@ -105,17 +110,28 @@ public class GameFrame extends JFrame {
         balls.add(ball1);
 
     }
-    public void removeBlock(){
+    public void removeBall(Block block) {
+        block.remove(block);
+        gamePanel.remove(block);
+        gamePanel.repaint();
+    }
 
-        ArrayList<Block> blocks1;
-        blocks1 = blocks;
-        Block block1 = new Block(0, 0, 0);
-        for(Block block : blocks1){
-            if(block.Power == 0){
-                    block1 = block;
-            }
+    // Implement collision detection and point increase here
+    // This method should be called when collision occurs
+    public void handleCollision(Block block) {
+        // Reduce block power
+        block.reducePower();
+
+        // Increase points
+        Point++;
+
+        // Update points label
+        pointsLabel.setText("Points: " + Point);
+
+        // Check if the ball's power reaches zero
+        if (block.getPower() <= 0) {
+            removeBall(block);
         }
-
     }
 
     public ArrayList<Block> getBlocks() {

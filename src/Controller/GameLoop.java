@@ -55,7 +55,7 @@ public class GameLoop extends Thread{
 
         }
         else {
-            game.getGameFrame().removeBlock();
+
             int X, Y;
             X = Y = 0;
             if(game.getGameFrame().Stop){
@@ -65,42 +65,42 @@ public class GameLoop extends Thread{
                     ball.SetV(X, Y);
                 }
                 game.getGameFrame().Stop = false;
-                int u = game.getGameFrame().MaxNumberOFballs;
+                int u = game.getGameFrame().getBalls().size() * 5;
                 for (Ball ball : game.getGameFrame().getBalls()) {
                     for(int i = 0; i < u; i++){
                         ball.move();
-                        ball.intersectBall();
-                        try {
-                            Thread.sleep(2);
-                        }
-                        catch (Exception e){
-
-                        }
                         game.getGameFrame().repaint();
                     }
+
                     u -= 5;
                 }
             }
             boolean CheckTheEnd = true;
             for (Ball ball : game.getGameFrame().getBalls()) {
                 ball.move();
-                ball.intersectBall();
+                for(Block block : game.getGameFrame().getBlocks()){
+                    if(game.getIntersection().intersect(block, ball))
+                        game.getGameFrame().handleCollision(block);
+                }
                 if (ball.getyVelocity() != 0 || ball.getxVelocity() != 0)
                     CheckTheEnd = false;
             }
 
-            for(Block block : game.getGameFrame().getBlocks()){
-            /*if(game.getIntersection().intersct(block, game.getGameFrame().getBall())){
-                game.getGameFrame().Point += 1;
 
-            }*/
-            }
+
+
+
             if(CheckTheEnd){
                 game.getGameFrame().onMove = false;
                 game.getGameFrame().addInThisState = false;
             }
         }
+        try {
+            Thread.sleep(0, 1);
+        }
+        catch (Exception e){
 
+        }
 
 
 

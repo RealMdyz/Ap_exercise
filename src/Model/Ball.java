@@ -36,6 +36,7 @@ public class Ball extends ObjectsInGame implements Moveable{
 
         this.setX(this.getX() + this.xVelocity);
         this.setY(this.getY() + this.yVelocity);
+        checkBounds();
         check();
 
     }
@@ -62,6 +63,7 @@ public class Ball extends ObjectsInGame implements Moveable{
        double velocityY = Math.sin(angle) * 5; // Adjust the velocity as needed
        setxVelocity((int)velocityX);
        setyVelocity((int)velocityY);
+
    }
 
     public int getxVelocity() {
@@ -80,22 +82,22 @@ public class Ball extends ObjectsInGame implements Moveable{
         this.yVelocity = yVelocity;
     }
 
-    public void intersectBall(){
-        if(getX() <= 0){
-            ChangeAngle(- getxVelocity(), getyVelocity());
+    public void checkBounds() {
+        if (getX() <= 0 || getX() >= 570) { // Adjusted to consider the ball's width
+            // Reverse x velocity when hitting side walls
+            setxVelocity(-getxVelocity());
         }
-        if(getX() >= 570){
-            ChangeAngle(- getxVelocity(), getyVelocity());
+        if (getY() <= 10) { // Adjusted to consider the ball's height
+            // Reverse y velocity when hitting the top
+            setyVelocity(-getyVelocity());
         }
-        if(getY() <= 10){
-            ChangeAngle(getxVelocity(), - getyVelocity());
-        }
-
+        // No need to handle bottom collision separately as it is handled in the game loop
     }
+
     public void SetV(int x, int y){
         double angle = Math.atan2(- getY() + y, - getX() + x);
-        double velocityX = Math.cos(angle) * 2; // Adjust the velocity as needed
-        double velocityY = Math.sin(angle) * 2; // Adjust the velocity as needed
+        double velocityX = Math.cos(angle) * 5; // Adjust the velocity as needed
+        double velocityY = Math.sin(angle) * 5; // Adjust the velocity as needed
         setxVelocity((int)velocityX);
         setyVelocity((int)velocityY);
     }
@@ -106,5 +108,14 @@ public class Ball extends ObjectsInGame implements Moveable{
 
     public void setLastMoveTime(long lastMoveTime) {
         LastMoveTime = lastMoveTime;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public void setPosition(int x, int y){
+        setX(x);
+        setY(y);
     }
 }
