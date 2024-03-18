@@ -22,24 +22,12 @@ public class GameLoop extends Thread{
 
     }
     private void update() {
-      /*  game.getGameFrame().getBall().move();
-        game.getIntersection().intersectBall(game.getGameFrame().getBall());
-        if(game.getGameFrame().getBall().getxVelocity() == game.getGameFrame().getBall().getyVelocity() && game.getGameFrame().getBall().getyVelocity() == 0){
-            if (game.getGameFrame().isMoveBall) {
-                for (Block block : game.getGameFrame().getBlocks()) {
-                    block.move();
-                }
-                game.getGameFrame().addRandomBlock();
-                game.getGameFrame().isMoveBall = false;
-            }
-            game.getGameFrame().addball();
-
-        }*/
         game.getGameFrame().AddBlocksToPanel();
         game.getGameFrame().AddballsToPanel();
 
         if(!game.getGameFrame().onMove){
             if(!game.getGameFrame().addInThisState){
+
                 for (Block block : game.getGameFrame().getBlocks()) {
                     block.move();
                 }
@@ -48,8 +36,14 @@ public class GameLoop extends Thread{
                 if(game.getGameFrame().getBalls().size() == 0){
                     game.getGameFrame().addball(270, 650);
                 }
-                else
+                else {
+                    for(Ball ball : game.getGameFrame().getBalls()){
+                        ball.setY(game.getGameFrame().getBalls().getFirst().getY());
+                        ball.setX(game.getGameFrame().getBalls().getFirst().getX());
+                    }
                     game.getGameFrame().addball(game.getGameFrame().getBalls().getFirst().getX(), game.getGameFrame().getBalls().getFirst().getY());
+                }
+
                 game.getGameFrame().addRandomBlock();
 
             }
@@ -57,9 +51,11 @@ public class GameLoop extends Thread{
         }
         else {
 
+            game.getGameFrame().repaint();
             int X, Y;
             X = Y = 0;
             if(game.getGameFrame().Stop){
+
                 X = game.getInputListener().b[0];
                 Y = game.getInputListener().b[1];
                 for(Ball ball : game.getGameFrame().getBalls()){
