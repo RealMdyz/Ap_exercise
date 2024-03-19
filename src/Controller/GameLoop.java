@@ -7,10 +7,11 @@ import Model.Game;
 import java.awt.*;
 import java.util.ArrayList;
 
+
+
 public class GameLoop extends Thread{
 
     private Game game;
-    int time = 0;
 
     public GameLoop(Game game){
         this.game = game;
@@ -24,7 +25,12 @@ public class GameLoop extends Thread{
     private void update() {
         game.getGameFrame().AddBlocksToPanel();
         game.getGameFrame().AddballsToPanel();
-
+        if(game.getGameFrame().Aim && game.getGameFrame().Stop){
+            game.getInputListener().setAimModeEnabled(true);
+        }
+        else {
+            game.getInputListener().setAimModeEnabled(false);
+        }
         if(!game.getGameFrame().onMove){
             if(!game.getGameFrame().addInThisState){
 
@@ -45,6 +51,7 @@ public class GameLoop extends Thread{
                 }
 
                 game.getGameFrame().addRandomBlock();
+                game.getGameFrame().repaint();
 
             }
 
@@ -55,7 +62,11 @@ public class GameLoop extends Thread{
             int X, Y;
             X = Y = 0;
             if(game.getGameFrame().Stop){
-
+                ArrayList<Ball> ballsCopy = new ArrayList<>(game.getGameFrame().getBalls());
+                for (Ball ball : ballsCopy) {
+                    ball.changeBallColor(game.getGameFrame().Color);
+                }
+                game.getGameFrame().repaint();
                 X = game.getInputListener().b[0];
                 Y = game.getInputListener().b[1];
                 for(Ball ball : game.getGameFrame().getBalls()){
@@ -68,7 +79,6 @@ public class GameLoop extends Thread{
                         ball.move();
                         game.getGameFrame().repaint();
                     }
-
                     u -= 5;
                 }
             }
@@ -102,33 +112,22 @@ public class GameLoop extends Thread{
                     CheckTheEnd = false;
             }
 
-
-
-
-
             if(CheckTheEnd){
                 game.getGameFrame().onMove = false;
                 game.getGameFrame().addInThisState = false;
             }
         }
+
         try {
-            Thread.sleep(0, 1);
+            Thread.sleep(4);
         }
         catch (Exception e){
 
         }
-
-
-
     }
-
-
-
-
     public Game getGame() {
         return game;
     }
-
     public void setGame(Game game) {
         this.game = game;
     }

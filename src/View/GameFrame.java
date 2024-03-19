@@ -2,6 +2,7 @@ package View;
 
 import Model.Ball;
 import Model.Block;
+import Model.SoundManager;
 
 import javax.swing.*;
 import javax.swing.*;
@@ -10,17 +11,21 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
+
 
 public class GameFrame extends JFrame {
 
 
     BackGroundPanel backGroundPanel;
-
+    public boolean Aim = false;
     private final static int BallStartX = 270;
     private final static int BallStartY = 650;
     private int AddOnMore = 25;
 
-    String PlayerName, Color;
+    public String PlayerName, Color;
+
+    protected SoundManager soundManager;
 
     JPanel panel;
     JPanel gamePanel;
@@ -28,6 +33,7 @@ public class GameFrame extends JFrame {
     public boolean onMove = false;
     public boolean addInThisState = false;
     public boolean Stop = false;
+    public boolean Sound = false;
     public int Level = 0;
     public int Point = 0;
     public JLabel pointsLabel;
@@ -40,9 +46,11 @@ public class GameFrame extends JFrame {
     private int totalRecord = 0; // Initialize total record here
 
 
-
     public GameFrame(){
 
+
+        soundManager = new SoundManager();
+        Color = "Red";
         setTitle("Bricks Breaker");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 800);
@@ -193,8 +201,11 @@ public class GameFrame extends JFrame {
 
     private void resetGame() {
         addToHistory(PlayerName, Point);
+        for(Block block : blocks)
+            gamePanel.remove(block);
+        for(Ball ball1 : balls)
+            gamePanel.remove(ball1);
         blocks.clear();
-        gamePanel.removeAll();
         gamePanel.repaint();
         balls.clear();
         gamePanel.removeAll();
@@ -350,18 +361,15 @@ public class GameFrame extends JFrame {
         // Handle the selected options
         if (result == JOptionPane.OK_OPTION) {
             if (onSoundButton.isSelected()) {
-                // Handle sound on option
-                System.out.println("Sound On");
+                soundManager.playBackgroundMusic();
             } else if (offSoundButton.isSelected()) {
-                // Handle sound off option
-                System.out.println("Sound Off");
+                soundManager.stopBackgroundMusic();
             }
-
             // Handle aim option
             if (aimCheckBox.isSelected()) {
-                System.out.println("Aim is ON");
+                Aim = true;
             } else {
-                System.out.println("Aim is OFF");
+                Aim = false;
             }
 
             // Handle save game option
@@ -373,7 +381,19 @@ public class GameFrame extends JFrame {
         }
     }
     private void addToHistory(String playerName, int score) {
-        history.add(playerName + ": " + score); // Add the player name and score as a single entry
+        LocalDateTime currentTime = getCurrentSystemTime();
+        history.add(playerName + ": " + score + ":" + currentTime); // Add the player name and score as a single entry
+    }
+    public static LocalDateTime getCurrentSystemTime() {
+        return LocalDateTime.now();
+    }
+
+    public SoundManager getSoundManager() {
+        return soundManager;
+    }
+
+    public void setSoundManager(SoundManager soundManager) {
+        this.soundManager = soundManager;
     }
 
 }

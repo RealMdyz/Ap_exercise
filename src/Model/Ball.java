@@ -2,6 +2,10 @@ package Model;
 
 import MyProject.*;
 import java.awt.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentListener;
@@ -117,5 +121,53 @@ public class Ball extends ObjectsInGame implements Moveable{
     public void setPosition(int x, int y){
         setX(x);
         setY(y);
+    }
+
+    public void changeBallColor(String chosenColor) {
+        try {
+            BufferedImage ballImage = ImageIO.read(new File("src/Ball1.png"));
+
+            // Iterate over each pixel of the image
+            for (int y = 0; y < ballImage.getHeight(); y++) {
+                for (int x = 0; x < ballImage.getWidth(); x++) {
+                    int pixel = ballImage.getRGB(x, y);
+                    // Extract the alpha, red, green, and blue components of the pixel
+                    int alpha = (pixel >> 24) & 0xFF;
+                    int red = (pixel >> 16) & 0xFF;
+                    int green = (pixel >> 8) & 0xFF;
+                    int blue = pixel & 0xFF;
+                    // Replace all non-transparent pixels with the player's chosen color
+                    if (alpha != 0) {
+                        Color color = getColorFromString(chosenColor);
+                        ballImage.setRGB(x, y, color.getRGB());
+                    }
+                }
+            }
+
+            // Update the background with the modified ball image
+            background = ballImage;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Color getColorFromString(String colorName) {
+        // Convert the color name string to a Color object
+        switch (colorName.toLowerCase()) {
+            case "red":
+                return Color.RED;
+            case "green":
+                return Color.GREEN;
+            case "blue":
+                return Color.BLUE;
+            case "yellow":
+                return Color.YELLOW;
+            case "orange":
+                return Color.ORANGE;
+            case "purple":
+                return Color.MAGENTA;
+            default:
+                return Color.RED; // Default to red if the color name is not recognized
+        }
     }
 }

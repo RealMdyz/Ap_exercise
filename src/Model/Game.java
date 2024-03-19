@@ -8,13 +8,13 @@ public class Game {
     protected InputListener inputListener;
     private boolean isGameRunning = true;
     protected Intersection intersection;
-
     public Game(){
         gameFrame = new GameFrame();
 
         inputListener = new InputListener(gameFrame);
 
         intersection = new Intersection();
+
     }
 
 
@@ -48,4 +48,5 @@ public class Game {
     public void setIntersection(Intersection intersection) {
         this.intersection = intersection;
     }
+
 }
