@@ -48,6 +48,12 @@ public class Block extends ObjectsInGame implements Moveable{
         this.setY(this.getY() + yVelocity);
         this.repaint();
     }
+    public void MoveBack(){
+        this.setX(this.getX() - xVelocity);
+        this.repaint();
+        this.setY(this.getY() - yVelocity);
+        this.repaint();
+    }
     public void reducePower(){
         this.Power -= 1;
     }

@@ -17,6 +17,8 @@ public class GameLoop extends Thread{
     int BadAimLevel = -2;
     long startTime_For_Red = -20;
     long startTime_For_Green = -20;
+
+    private int Joooon = 1;
     public GameLoop(Game game){
         this.game = game;
     }
@@ -43,9 +45,12 @@ public class GameLoop extends Thread{
         }
         if(!game.getGameFrame().onMove){
             if(!game.getGameFrame().addInThisState){
-
+                if(Joooon == 0)
+                    game.getGameFrame().resetGame();
                 for (Block block : game.getGameFrame().getBlocks()) {
                     block.move();
+                    if(block.getY() >= 650 )
+                        Joooon -= 1;
                 }
                 for(UsualItem itemBall : game.getGameFrame().getItemBalls()){
                     itemBall.move();
@@ -152,6 +157,19 @@ public class GameLoop extends Thread{
                         itemBall.Power -= 1;
                         CountOfRemovedItemBall += 1;
                     }
+                    else if(game.getIntersection().intersect(itemBall, ball) && itemBall.Power == 1 && itemBall.COLOR.equals("orange")){
+                        itemBall.Power -= 1;
+                        CountOfRemovedItemBall += 1;
+                        Joooon += 1;
+                    }
+                    else if(game.getIntersection().intersect(itemBall, ball) && itemBall.Power == 1 && itemBall.COLOR.equals("blue")){
+                        itemBall.Power -= 1;
+                        CountOfRemovedItemBall += 1;
+                        for (Block block : game.getGameFrame().getBlocks()) {
+                            block.MoveBack();
+                            block.MoveBack();
+                        }
+                    }
                 }
 
                 for(int i = 0; i < CountOfRemovedItemBall ;  i++){
@@ -190,6 +208,9 @@ public class GameLoop extends Thread{
 
             }
         }
+
+
+
 
     }
     public Game getGame() {

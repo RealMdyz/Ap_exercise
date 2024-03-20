@@ -5,7 +5,9 @@ public class Main {
     }
     // Items :
     // Red : Power_For_Ball
-    // Yellow : Add_A_New
+    // Yellow : Add_A_New_Ball
     // Green: Speed_For_ball
     // Purple : Random_Aim
+    // Orange : Jooon Ezafe
+    // Blue : Bargasht Block Ha!
 }

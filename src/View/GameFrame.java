@@ -21,7 +21,7 @@ public class GameFrame extends JFrame {
     public boolean Aim = false;
     private final static int BallStartX = 270;
     private final static int BallStartY = 650;
-    private int AddOnMore = 25, AddItemBallLoop = 5;
+    private int AddOnMore = 25, AddItemBallLoop = 7;
 
     public String PlayerName, Color;
 
@@ -199,11 +199,23 @@ public class GameFrame extends JFrame {
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
         }
-        else if(Level % AddItemBallLoop == 3){
+        else if(Level % AddItemBallLoop == 4){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "yellow");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
         }
+        else if(Level % AddItemBallLoop == 3){
+            UsualItem itemBall = new UsualItem(xFori, 0, 1, "orange");
+            gamePanel.add(itemBall);
+            itemBalls.add(itemBall);
+        }
+        else if(Level % AddItemBallLoop == 5){
+            UsualItem itemBall = new UsualItem(xFori, 0, 1, "blue");
+            gamePanel.add(itemBall);
+            itemBalls.add(itemBall);
+        }
+
+
         Level += 1;
         int x = 0;
         for(int i = 0; i < Cnt; i++){
@@ -236,7 +248,7 @@ public class GameFrame extends JFrame {
 
     }
 
-    private void resetGame() {
+    public void resetGame() {
         addToHistory(PlayerName, Point);
         for(Block block : blocks)
             gamePanel.remove(block);
@@ -362,7 +374,7 @@ public class GameFrame extends JFrame {
 
             if (easyButton.isSelected()) {
                 // Start game with easy level
-                AddItemBallLoop = 5;
+                AddItemBallLoop = 7;
                 AddOnMore = 25;
             } else if (normalButton.isSelected()) {
                 // Start game with normal level
@@ -428,7 +440,7 @@ public class GameFrame extends JFrame {
     }
     private void addToHistory(String playerName, int score) {
         LocalDateTime currentTime = getCurrentSystemTime();
-        history.add(playerName + ": " + score + ":" + currentTime); // Add the player name and score as a single entry
+        history.add(playerName + " : " + score + " : " + currentTime); // Add the player name and score as a single entry
     }
     public static LocalDateTime getCurrentSystemTime() {
         return LocalDateTime.now();
