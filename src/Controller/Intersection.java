@@ -2,8 +2,7 @@ package Controller;
 
 import Model.Ball;
 import Model.Block;
-
-import java.awt.*;
+import Model.UsualItem;
 
 public class Intersection {
 
@@ -61,6 +60,24 @@ public class Intersection {
         }
 
         return false;
+    }
+    public boolean intersect(UsualItem itemBall, Ball ball) {
+        // Calculate the center of the ball
+        int ballCenterX = ball.getX() + ball.getWidth() / 2;
+        int ballCenterY = ball.getY() + ball.getHeight() / 2;
+
+        // Calculate the center of the item ball
+        int itemBallCenterX = itemBall.getX() + itemBall.getWidth() / 2;
+        int itemBallCenterY = itemBall.getY() + itemBall.getHeight() / 2;
+
+        // Calculate the distance between the centers of the two balls
+        int dx = ballCenterX - itemBallCenterX;
+        int dy = ballCenterY - itemBallCenterY;
+        int distanceSquared = dx * dx + dy * dy;
+
+        // Check if the distance is less than the sum of their radii squared
+        int combinedRadius = ball.getRadius() + itemBall.getWidth();
+        return distanceSquared <= combinedRadius * combinedRadius;
     }
 
     // Helper method to handle corner collision

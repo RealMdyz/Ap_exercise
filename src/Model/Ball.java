@@ -17,12 +17,8 @@ public class Ball extends ObjectsInGame implements Moveable{
     private int yVelocity = 0;
     private final int radius = 15;
 
-
-
+    public int Power = 1;
     private long LastMoveTime = 0;
-
-
-
 
     public Ball(int x, int y){
         super(x, y);

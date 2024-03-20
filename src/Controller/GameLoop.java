@@ -3,8 +3,8 @@ package Controller;
 import Model.Ball;
 import Model.Block;
 import Model.Game;
+import Model.UsualItem;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -12,7 +12,11 @@ import java.util.ArrayList;
 public class GameLoop extends Thread{
 
     private Game game;
+    private int HowManyBallShouldAdd = 0;
 
+    int BadAimLevel = -2;
+    long startTime_For_Red = -20;
+    long startTime_For_Green = -20;
     public GameLoop(Game game){
         this.game = game;
     }
@@ -26,7 +30,13 @@ public class GameLoop extends Thread{
         game.getGameFrame().AddBlocksToPanel();
         game.getGameFrame().AddballsToPanel();
         if(game.getGameFrame().Aim && game.getGameFrame().Stop){
-            game.getInputListener().setAimModeEnabled(true);
+            if(game.getGameFrame().Level - BadAimLevel <= 1){
+                game.getInputListener().setRandomAim(true);
+            }
+            else{
+                game.getInputListener().setRandomAim(false);
+                game.getInputListener().setAimModeEnabled(true);
+            }
         }
         else {
             game.getInputListener().setAimModeEnabled(false);
@@ -37,18 +47,24 @@ public class GameLoop extends Thread{
                 for (Block block : game.getGameFrame().getBlocks()) {
                     block.move();
                 }
+                for(UsualItem itemBall : game.getGameFrame().getItemBalls()){
+                    itemBall.move();
+                }
                 game.getGameFrame().addInThisState = true;
                 game.getGameFrame().Stop = true;
                 if(game.getGameFrame().getBalls().size() == 0){
-                    game.getGameFrame().addball(270, 650);
+                    for(int q = 0; q < HowManyBallShouldAdd + 1; q++)
+                        game.getGameFrame().addball(270, 650);
                 }
                 else {
                     for(Ball ball : game.getGameFrame().getBalls()){
                         ball.setY(game.getGameFrame().getBalls().getFirst().getY());
                         ball.setX(game.getGameFrame().getBalls().getFirst().getX());
                     }
-                    game.getGameFrame().addball(game.getGameFrame().getBalls().getFirst().getX(), game.getGameFrame().getBalls().getFirst().getY());
+                    for(int q = 0; q < HowManyBallShouldAdd + 1; q++)
+                        game.getGameFrame().addball(game.getGameFrame().getBalls().getFirst().getX(), game.getGameFrame().getBalls().getFirst().getY());
                 }
+                HowManyBallShouldAdd = 0;
 
                 game.getGameFrame().addRandomBlock();
                 game.getGameFrame().repaint();
@@ -82,6 +98,7 @@ public class GameLoop extends Thread{
                     u -= 5;
                 }
             }
+
             boolean CheckTheEnd = true;
             for (Ball ball : game.getGameFrame().getBalls()) {
                 ball.move();
@@ -89,6 +106,9 @@ public class GameLoop extends Thread{
                 for(Block block : game.getGameFrame().getBlocks()){
                     if(game.getIntersection().intersect(block, ball)){
                         block.reducePower();
+                        if(System.currentTimeMillis() - startTime_For_Red < 15000 && block.Power > 0){
+                            block.reducePower();
+                        }
                         game.getGameFrame().Point += 1;
                         game.getGameFrame(). pointsLabel.setText("Points: " + game.getGameFrame().Point);
                         if(block.Power == 0)
@@ -110,6 +130,43 @@ public class GameLoop extends Thread{
 
                 if (ball.getyVelocity() != 0 || ball.getxVelocity() != 0)
                     CheckTheEnd = false;
+                int CountOfRemovedItemBall = 0;
+                for(UsualItem itemBall : game.getGameFrame().getItemBalls()){
+                    if(game.getIntersection().intersect(itemBall, ball) && itemBall.Power == 1 && itemBall.COLOR.equals("yellow")){
+                        itemBall.Power -= 1;
+                        HowManyBallShouldAdd += 1;
+                        CountOfRemovedItemBall += 1;
+                    }
+                    else if(game.getIntersection().intersect(itemBall, ball) && itemBall.Power == 1 && itemBall.COLOR.equals("red")){
+                        startTime_For_Red = System.currentTimeMillis();
+                        itemBall.Power -= 1;
+                        CountOfRemovedItemBall += 1;
+                    }
+                    else if(game.getIntersection().intersect(itemBall, ball) && itemBall.Power == 1 && itemBall.COLOR.equals("green")){
+                        startTime_For_Green = System.currentTimeMillis();
+                        itemBall.Power -= 1;
+                        CountOfRemovedItemBall += 1;
+                    }
+                    else if(game.getIntersection().intersect(itemBall, ball) && itemBall.Power == 1 && itemBall.COLOR.equals("purple")){
+                        BadAimLevel = game.getGameFrame().Level;
+                        itemBall.Power -= 1;
+                        CountOfRemovedItemBall += 1;
+                    }
+                }
+
+                for(int i = 0; i < CountOfRemovedItemBall ;  i++){
+                    UsualItem itemBall = new UsualItem(0, 0, -2, "red");
+                    for(UsualItem itemBall1 : game.getGameFrame().getItemBalls()){
+                        if(itemBall1.Power == 0){
+                            itemBall = itemBall1;
+                            System.out.println();
+                        }
+                    }
+                    if(itemBall.Power == 0){
+                        game.getGameFrame().removeItemBall(itemBall);
+                    }
+
+                }
             }
 
             if(CheckTheEnd){
@@ -117,13 +174,23 @@ public class GameLoop extends Thread{
                 game.getGameFrame().addInThisState = false;
             }
         }
+        if(System.currentTimeMillis() - startTime_For_Green < 15000){
+            try {
+                Thread.sleep(6);
+            }
+            catch (Exception e){
 
-        try {
-            Thread.sleep(4);
+            }
         }
-        catch (Exception e){
+        else {
+            try {
+                Thread.sleep(12);
+            }
+            catch (Exception e){
 
+            }
         }
+
     }
     public Game getGame() {
         return game;
