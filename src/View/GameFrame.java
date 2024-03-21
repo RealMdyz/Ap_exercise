@@ -1,9 +1,6 @@
 package View;
 
-import Model.Ball;
-import Model.Block;
-import Model.UsualItem;
-import Model.SoundManager;
+import Model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,6 +39,8 @@ public class GameFrame extends JFrame {
     private ArrayList<Block> blocks = new ArrayList<>();
     private ArrayList<Ball>  balls = new ArrayList<>();
     private ArrayList<UsualItem> itemBalls = new ArrayList<>();
+
+    private ArrayList<SpecialItem> specialItems = new ArrayList<>();
 
     private ArrayList<String> history = new ArrayList<>();
     private int totalRecord = 0; // Initialize total record here
@@ -112,6 +111,7 @@ public class GameFrame extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     resetGame();
                     showLevelSelectionPanel();
+                    resetGame();
                 }
             });
             ExitMenuItem.addActionListener(new ActionListener() {
@@ -172,6 +172,12 @@ public class GameFrame extends JFrame {
                 gamePanel.add(itemBall);
         gamePanel.repaint();
     }
+    public void AddSpecailItemToPanel(){
+        ArrayList<SpecialItem> specialItemsCopy = new ArrayList<>(specialItems);
+        for(SpecialItem itemBall : specialItemsCopy)
+            gamePanel.add(itemBall);
+        gamePanel.repaint();
+    }
 
     public Ball getBall() {
         return ball;
@@ -184,48 +190,66 @@ public class GameFrame extends JFrame {
         int Cnt = (Level / AddOnMore) + 1;
         int u = (int)(Math.random() * 5);
         int xFori = u * 100;
+        ArrayList<Integer> A = new ArrayList<>();
         if(Level % AddItemBallLoop == 0){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "purple");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
+            A.add(xFori);
         }
         else if(Level % AddItemBallLoop == 1){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "red");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
+            A.add(xFori);
         }
         else if(Level % AddItemBallLoop == 2){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "green");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
+            A.add(xFori);
         }
         else if(Level % AddItemBallLoop == 4){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "yellow");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
+            A.add(xFori);
         }
         else if(Level % AddItemBallLoop == 3){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "orange");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
+            A.add(xFori);
         }
         else if(Level % AddItemBallLoop == 5){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "blue");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
+            A.add(xFori);
         }
 
 
         Level += 1;
         int x = 0;
+
+
         for(int i = 0; i < Cnt; i++){
             u = (int)(Math.random() * 5);
             x =  (u * 100);
-            if(x == xFori)
+            if(A.contains(x))
                 continue;
-            Block block = new Block(x, 0, Level);
-            blocks.add(block);
-            gamePanel.add(block);
+            A.add(x);
+            if(Level % 10 == 1){
+                SpecialItem specialItem = new SpecialItem(x, 0, Level, "red");
+                specialItems.add(specialItem);
+                gamePanel.add(specialItem);
+            }
+            else{
+                Block block = new Block(x, 0, Level);
+                blocks.add(block);
+                gamePanel.add(block);
+            }
+
         }
         gamePanel.repaint();
 
@@ -243,11 +267,17 @@ public class GameFrame extends JFrame {
         gamePanel.repaint();
     }
     public void removeItemBall(UsualItem itemBall){
-        itemBalls.remove(itemBall);
         gamePanel.remove(itemBall);
-
+        itemBalls.remove(itemBall);
+        AddItemBallToPanel();
+        gamePanel.repaint();
     }
-
+    public void RemoveSpecialItem(SpecialItem specialItem){
+        gamePanel.remove(specialItem);
+        specialItems.remove(specialItem);
+        AddSpecailItemToPanel();
+        gamePanel.repaint();
+    }
     public void resetGame() {
         addToHistory(PlayerName, Point);
         for(Block block : blocks)
@@ -256,6 +286,11 @@ public class GameFrame extends JFrame {
             gamePanel.remove(ball1);
         for(UsualItem itemBall : itemBalls)
             gamePanel.remove(itemBall);
+        for(SpecialItem itemBall : specialItems)
+            gamePanel.remove(itemBall);
+        specialItems.clear();
+        gamePanel.removeAll();
+        gamePanel.repaint();
         itemBalls.clear();
         gamePanel.removeAll();
         gamePanel.repaint();
@@ -272,7 +307,6 @@ public class GameFrame extends JFrame {
         totalRecord = Math.max(totalRecord, Point);
         Point = 0;
         gamePanel.repaint();
-
     }
     private void showGameHistoryPanel() {
         // Create a text area to display the history
@@ -371,7 +405,6 @@ public class GameFrame extends JFrame {
         if (result == JOptionPane.OK_OPTION) {
             PlayerName = playerNameField.getText(); // Get the entered player name
             Color = (String) colorComboBox.getSelectedItem(); // Get the selected color name
-
             if (easyButton.isSelected()) {
                 // Start game with easy level
                 AddItemBallLoop = 7;
@@ -460,5 +493,13 @@ public class GameFrame extends JFrame {
 
     public void setItemBalls(ArrayList<UsualItem> itemBalls) {
         this.itemBalls = itemBalls;
+    }
+
+    public ArrayList<SpecialItem> getSpecialItems() {
+        return specialItems;
+    }
+
+    public void setSpecialItems(ArrayList<SpecialItem> specialItems) {
+        this.specialItems = specialItems;
     }
 }

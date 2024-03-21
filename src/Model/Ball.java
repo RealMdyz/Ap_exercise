@@ -19,6 +19,8 @@ public class Ball extends ObjectsInGame implements Moveable{
 
     public int Power = 1;
     private long LastMoveTime = 0;
+    private final int Zarib = 10;
+
 
     public Ball(int x, int y){
         super(x, y);
@@ -59,8 +61,8 @@ public class Ball extends ObjectsInGame implements Moveable{
 
    public void ChangeAngle(int x, int y){
        double angle = Math.atan2(y, x);
-       double velocityX = Math.cos(angle) * 5; // Adjust the velocity as needed
-       double velocityY = Math.sin(angle) * 5; // Adjust the velocity as needed
+       double velocityX = Math.cos(angle) * Zarib; // Adjust the velocity as needed
+       double velocityY = Math.sin(angle) * Zarib; // Adjust the velocity as needed
        setxVelocity((int)velocityX);
        setyVelocity((int)velocityY);
 
@@ -96,8 +98,8 @@ public class Ball extends ObjectsInGame implements Moveable{
 
     public void SetV(int x, int y){
         double angle = Math.atan2(- getY() + y, - getX() + x);
-        double velocityX = Math.cos(angle) * 5; // Adjust the velocity as needed
-        double velocityY = Math.sin(angle) * 5; // Adjust the velocity as needed
+        double velocityX = Math.cos(angle) * Zarib; // Adjust the velocity as needed
+        double velocityY = Math.sin(angle) * Zarib; // Adjust the velocity as needed
         setxVelocity((int)velocityX);
         setyVelocity((int)velocityY);
     }
@@ -166,4 +168,28 @@ public class Ball extends ObjectsInGame implements Moveable{
                 return Color.RED; // Default to red if the color name is not recognized
         }
     }
+
+    public void setColor(Color color){
+        this.background = createBallImageWithColor(color);
+    }
+
+    private BufferedImage createBallImageWithColor(Color color) {
+        BufferedImage ballImage = null;
+        try {
+            ballImage = ImageIO.read(new File("src/Ball1.png"));
+            for (int y = 0; y < ballImage.getHeight(); y++) {
+                for (int x = 0; x < ballImage.getWidth(); x++) {
+                    int pixel = ballImage.getRGB(x, y);
+                    int alpha = (pixel >> 24) & 0xFF;
+                    if (alpha != 0) {
+                        ballImage.setRGB(x, y, color.getRGB());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ballImage;
+    }
+
 }

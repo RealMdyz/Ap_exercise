@@ -1,12 +1,13 @@
 package Controller;
 
-import Model.Ball;
-import Model.Block;
-import Model.Game;
-import Model.UsualItem;
+import Model.*;
 
+import javax.swing.*;
+import java.awt.event.*;
 import java.util.ArrayList;
-
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Random;
 
 
 public class GameLoop extends Thread{
@@ -49,7 +50,12 @@ public class GameLoop extends Thread{
                     game.getGameFrame().resetGame();
                 for (Block block : game.getGameFrame().getBlocks()) {
                     block.move();
-                    if(block.getY() >= 650 )
+                    if(block.getY() >= 550)
+                        Joooon -= 1;
+                }
+                for (SpecialItem specialItem : game.getGameFrame().getSpecialItems()) {
+                    specialItem.move();
+                    if(specialItem.getY() >= 650 )
                         Joooon -= 1;
                 }
                 for(UsualItem itemBall : game.getGameFrame().getItemBalls()){
@@ -94,16 +100,15 @@ public class GameLoop extends Thread{
                     ball.SetV(X, Y);
                 }
                 game.getGameFrame().Stop = false;
-                int u = game.getGameFrame().getBalls().size() * 5;
+                int u = game.getGameFrame().getBalls().size() * 2;
                 for (Ball ball : game.getGameFrame().getBalls()) {
                     for(int i = 0; i < u; i++){
                         ball.move();
                         game.getGameFrame().repaint();
                     }
-                    u -= 5;
+                    u -= 2;
                 }
             }
-
             boolean CheckTheEnd = true;
             for (Ball ball : game.getGameFrame().getBalls()) {
                 ball.move();
@@ -169,6 +174,14 @@ public class GameLoop extends Thread{
                             block.MoveBack();
                             block.MoveBack();
                         }
+                        for (SpecialItem specialItem : game.getGameFrame().getSpecialItems()) {
+                            specialItem.MoveBack();
+                            specialItem.MoveBack();
+                        }
+                        for (UsualItem usualItem : game.getGameFrame().getItemBalls()) {
+                            usualItem.MoveBack();
+                            usualItem.MoveBack();
+                        }
                     }
                 }
 
@@ -177,7 +190,6 @@ public class GameLoop extends Thread{
                     for(UsualItem itemBall1 : game.getGameFrame().getItemBalls()){
                         if(itemBall1.Power == 0){
                             itemBall = itemBall1;
-                            System.out.println();
                         }
                     }
                     if(itemBall.Power == 0){
@@ -185,6 +197,81 @@ public class GameLoop extends Thread{
                     }
 
                 }
+                int CountOfRemovedSpecialItme = 0;
+                for(SpecialItem specialItem : game.getGameFrame().getSpecialItems()){
+                    if(game.getIntersection().intersect(specialItem, ball)){
+                        specialItem.reducePower();
+                        if(System.currentTimeMillis() - startTime_For_Red < 15000 && specialItem.Power > 0){
+                            specialItem.reducePower();
+                        }
+                        game.getGameFrame().Point += 1;
+                        game.getGameFrame(). pointsLabel.setText("Points: " + game.getGameFrame().Point);
+                        if(specialItem.Power == 0)
+                            CountOfRemovedBlock += 1;
+                    }
+
+                }
+                for(int i = 0; i < CountOfRemovedBlock;  i++){
+                    SpecialItem specialItem = new SpecialItem(0, 0, -1, "red");
+                    for(SpecialItem specialItem1 : game.getGameFrame().getSpecialItems()){
+                        if(specialItem1.Power == 0 && specialItem1.COLOR.equals("red")){
+                            specialItem = specialItem1;
+                            long startTime = System.currentTimeMillis();
+                            int lx = 0;
+
+                            while (System.currentTimeMillis() - startTime < 10000) { // Activate effect for 10 seconds
+                                lx += 1;
+                                if(lx % 2 == 0){
+                                    for (Block block : game.getGameFrame().getBlocks()) {
+                                        block.setVisible(false);
+                                    }
+                                    for(UsualItem usualItem : game.getGameFrame().getItemBalls()){
+                                        usualItem.setVisible(false);
+                                    }
+                                    for(SpecialItem specialItem2 : game.getGameFrame().getSpecialItems()){
+                                        specialItem2.setVisible(false);
+                                    }
+                                }
+                                else{
+                                    for (Block block : game.getGameFrame().getBlocks()) {
+                                        block.setVisible(true);
+                                    }
+                                    for(UsualItem usualItem : game.getGameFrame().getItemBalls()){
+                                        usualItem.setVisible(true);
+                                    }
+                                    for(SpecialItem specialItem2 : game.getGameFrame().getSpecialItems()){
+                                        specialItem2.setVisible(true);
+                                    }
+                                }
+                                for (Ball ball1 : game.getGameFrame().getBalls()) {
+                                    ball1.setColor(getRandomColor());
+                                }
+                                game.getGameFrame().repaint();
+                                try {
+                                    Thread.sleep(100); // Adjust the speed of the effect here
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            for (Ball ball1 : game.getGameFrame().getBalls()) {
+                                ball1.changeBallColor(game.getGameFrame().Color);
+                            }
+                            for (Block block : game.getGameFrame().getBlocks()) {
+                                block.setVisible(true);
+                            }
+                            for(UsualItem usualItem : game.getGameFrame().getItemBalls()){
+                                usualItem.setVisible(true);
+                            }
+                            for(SpecialItem specialItem2 : game.getGameFrame().getSpecialItems()){
+                                specialItem2.setVisible(true);
+                            }
+
+                        }
+                    }
+                    if(specialItem.Power == 0)
+                        game.getGameFrame().RemoveSpecialItem(specialItem);
+                }
+
             }
 
             if(CheckTheEnd){
@@ -218,5 +305,12 @@ public class GameLoop extends Thread{
     }
     public void setGame(Game game) {
         this.game = game;
+    }
+    private Color getRandomColor() {
+        Random rand = new Random();
+        float r = rand.nextFloat();
+        float g = rand.nextFloat();
+        float b = rand.nextFloat();
+        return new Color(r, g, b);
     }
 }

@@ -10,9 +10,7 @@ public class Game {
     protected Intersection intersection;
     public Game(){
         gameFrame = new GameFrame();
-
         inputListener = new InputListener(gameFrame);
-
         intersection = new Intersection();
     }
 

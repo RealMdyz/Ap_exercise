@@ -65,4 +65,36 @@ public class Block extends ObjectsInGame implements Moveable{
     public void setPower(int power) {
         Power = power;
     }
+    public void setBlockColor(Color color) {
+        Graphics2D g2D = (Graphics2D) getGraphics();
+
+        g2D.setColor(color);
+        g2D.fillRect(getX(), getY(), getWidth(), getHeight());
+
+        g2D.setColor(Color.white);
+        g2D.setFont(new Font("Arial", Font.BOLD, 20));
+        String numberString = String.valueOf(Power);
+        FontMetrics fm = g2D.getFontMetrics();
+        int x = (getWidth() - fm.stringWidth(numberString)) / 2;
+        int y = (getHeight() - fm.getHeight()) / 2 + fm.getAscent();
+        g2D.drawString(numberString, x, y);
+    }
+    private Color getColorFromString(String colorName) {
+        switch (colorName.toLowerCase()) {
+            case "red":
+                return Color.RED;
+            case "green":
+                return Color.GREEN;
+            case "blue":
+                return Color.BLUE;
+            case "yellow":
+                return Color.YELLOW;
+            case "orange":
+                return Color.ORANGE;
+            case "purple":
+                return Color.MAGENTA;
+            default:
+                return Color.BLUE;
+        }
+    }
 }
