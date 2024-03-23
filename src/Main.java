@@ -11,5 +11,6 @@ public class Main {
     // Orange : Jooon Ezafe
     // Blue : Bargasht Block Ha!
 
-    // Red_Block : Raghs_Noor
+    // Red_Block : Raghs_Noor!
+    // purple_Block: Bomb!
 }

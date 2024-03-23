@@ -93,6 +93,8 @@ public class Block extends ObjectsInGame implements Moveable{
                 return Color.ORANGE;
             case "purple":
                 return Color.MAGENTA;
+            case "pink" :
+                return Color.pink;
             default:
                 return Color.BLUE;
         }

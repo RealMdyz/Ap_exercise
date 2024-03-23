@@ -16,8 +16,9 @@ public class GameLoop extends Thread{
     private int HowManyBallShouldAdd = 0;
 
     int BadAimLevel = -2;
-    long startTime_For_Red = -20;
-    long startTime_For_Green = -20;
+    long startTime_For_Red = -20000;
+    long startTime_For_Green = -20000;
+    private int Last = 0;
 
     private int Joooon = 1;
     public GameLoop(Game game){
@@ -99,19 +100,29 @@ public class GameLoop extends Thread{
                 for(Ball ball : game.getGameFrame().getBalls()){
                     ball.SetV(X, Y);
                 }
+                long LastDis = 0;
                 game.getGameFrame().Stop = false;
                 int u = game.getGameFrame().getBalls().size() * 2;
-                for (Ball ball : game.getGameFrame().getBalls()) {
-                    for(int i = 0; i < u; i++){
-                        ball.move();
-                        game.getGameFrame().repaint();
-                    }
-                    u -= 2;
-                }
+                game.getGameFrame().getBalls().getFirst().move();
+                Last = 0;
             }
             boolean CheckTheEnd = true;
+            int j1 = 0;
             for (Ball ball : game.getGameFrame().getBalls()) {
-                ball.move();
+                if(j1 <= Last){
+                    X = ball.getX();
+                    Y = ball.getY();
+                    ball.move();
+                }
+                if(j1 == Last + 1){
+                    double dis = (ball.getX() - X) *  (ball.getX() - X);
+                    dis +=  ((ball.getY() - Y) *  (ball.getY() - Y));
+                    if(dis >= 100){
+                        Last += 1;
+                        break;
+                    }
+                }
+                j1 += 1;
                 int CountOfRemovedBlock = 0;
                 for(Block block : game.getGameFrame().getBlocks()){
                     if(game.getIntersection().intersect(block, ball)){
@@ -267,6 +278,35 @@ public class GameLoop extends Thread{
                             }
 
                         }
+                        else if(specialItem1.Power == 0 && specialItem1.COLOR.equals("purple")){
+                            specialItem = specialItem1;
+                            // Explosion effect
+                            explode(specialItem.getX(), specialItem.getY());
+                            double ids = 0;
+                            CountOfRemovedBlock = 0;
+                            for(Block block : game.getGameFrame().getBlocks()){
+                                ids =  (specialItem.getX() - block.getX()) * (specialItem.getX() - block.getX());
+                                ids += ((specialItem.getY() - block.getY()) * (specialItem.getY() - block.getY()));
+                                if(Math.sqrt(ids) <= 150){
+                                    for(int l = 0; l < 50 && block.Power > 0; l++)
+                                        block.reducePower();
+                                    if(block.Power == 0){
+                                        CountOfRemovedBlock += 1;
+                                    }
+                                }
+                            }
+                            for(int j = 0; j < CountOfRemovedBlock; j += 1){
+                                Block block = new Block(0, 0, -1);
+                                for(Block block1 : game.getGameFrame().getBlocks()){
+                                    if(block1.Power == 0){
+                                        block = block1;
+                                    }
+                                }
+                                if(block.Power == 0)
+                                    game.getGameFrame().removeBlock(block);
+                            }
+
+                        }
                     }
                     if(specialItem.Power == 0)
                         game.getGameFrame().RemoveSpecialItem(specialItem);
@@ -312,5 +352,8 @@ public class GameLoop extends Thread{
         float g = rand.nextFloat();
         float b = rand.nextFloat();
         return new Color(r, g, b);
+    }
+    private void explode(int x, int y) {
+        game.getGameFrame().playSound();
     }
 }

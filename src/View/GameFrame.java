@@ -8,17 +8,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.JFileChooser;
+
 
 
 public class GameFrame extends JFrame {
 
 
     BackGroundPanel backGroundPanel;
-
     public boolean Aim = false;
     private final static int BallStartX = 270;
     private final static int BallStartY = 650;
     private int AddOnMore = 25, AddItemBallLoop = 7;
+    private Timer videoTimer;
+    private Timer soundTimer;
 
     public String PlayerName, Color;
 
@@ -239,8 +248,13 @@ public class GameFrame extends JFrame {
             if(A.contains(x))
                 continue;
             A.add(x);
-            if(Level % 10 == 1){
+            if(Level % 10 == 1 && i == 0){
                 SpecialItem specialItem = new SpecialItem(x, 0, Level, "red");
+                specialItems.add(specialItem);
+                gamePanel.add(specialItem);
+            }
+            else if(Level % 10 == 5 && i == 0){
+                SpecialItem specialItem = new SpecialItem(x, 0, Level, "purple");
                 specialItems.add(specialItem);
                 gamePanel.add(specialItem);
             }
@@ -501,5 +515,29 @@ public class GameFrame extends JFrame {
 
     public void setSpecialItems(ArrayList<SpecialItem> specialItems) {
         this.specialItems = specialItems;
+    }
+
+
+
+    public void playSound() {
+        String Path = "src/Explosion effect.wav";
+        if (Path != null) {
+            try {
+                Clip clip = AudioSystem.getClip();
+                clip.open(AudioSystem.getAudioInputStream(new File(Path)));
+                clip.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public void startSound() {
+        soundTimer.start();
+    }
+
+    public void stopSound() {
+        soundTimer.stop();
     }
 }
