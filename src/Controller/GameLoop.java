@@ -209,9 +209,10 @@ public class GameLoop extends Thread{
                         specialItem.reducePower();
                         if(System.currentTimeMillis() - startTime_For_Red < 15000 && specialItem.Power > 0){
                             specialItem.reducePower();
+                            game.getGameFrame().Point += 1;
                         }
                         game.getGameFrame().Point += 1;
-                        game.getGameFrame(). pointsLabel.setText("Points: " + game.getGameFrame().Point);
+                        game.getGameFrame().pointsLabel.setText("Points: " + game.getGameFrame().Point);
                         if(specialItem.Power == 0)
                             CountOfRemovedBlock += 1;
                     }
@@ -285,6 +286,7 @@ public class GameLoop extends Thread{
                                 if(Math.sqrt(ids) <= 150){
                                     for(int l = 0; l < 50 && block.Power > 0; l++){
                                         game.getGameFrame().Point += 1;
+                                        game.getGameFrame().pointsLabel.setText("Points: " + game.getGameFrame().Point);
                                         block.reducePower();
                                     }
 
@@ -302,6 +304,24 @@ public class GameLoop extends Thread{
                                 }
                                 if(block.Power == 0)
                                     game.getGameFrame().removeBlock(block);
+                            }
+
+                        }
+                        else if(specialItem1.Power == 0 && specialItem1.COLOR.equals("yellow")){
+                            specialItem = specialItem1;
+                            long StartOfTheTime = System.currentTimeMillis();
+                            int x = 100;
+                            while (System.currentTimeMillis() - StartOfTheTime < 10000){
+                                for (Block block : game.getGameFrame().getBlocks())
+                                    block.changeSize(x, 50);
+                                try {
+                                    Thread.sleep(100);
+                                }
+                                catch (Exception e){}
+                                x -= 1;
+                            }
+                            for (Block block : game.getGameFrame().getBlocks()){
+                                block.changeSize(100, 50);
                             }
 
                         }

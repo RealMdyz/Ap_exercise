@@ -250,13 +250,18 @@ public class GameFrame extends JFrame {
             if(A.contains(x))
                 continue;
             A.add(x);
-            if(Level % AddItemBallLoop == 1 && (int)(Level / AddItemBallLoop) % 2 == 0 && i == 0){
+            if(Level % AddItemBallLoop == 9 && (int)(Level / AddItemBallLoop) % 2 == 0 && i == 0){
                 SpecialItem specialItem = new SpecialItem(x, 0, Level, "red");
                 specialItems.add(specialItem);
                 gamePanel.add(specialItem);
             }
             else if(Level % AddItemBallLoop == 5 && (int)(Level / AddItemBallLoop) % 2 == 0 && i == 0){
                 SpecialItem specialItem = new SpecialItem(x, 0, Level, "purple");
+                specialItems.add(specialItem);
+                gamePanel.add(specialItem);
+            }
+            else if(Level % AddItemBallLoop == 1 && (int)(Level / AddItemBallLoop) % 2 == 0 && i == 0 ){
+                SpecialItem specialItem = new SpecialItem(x, 0, Level, "yellow");
                 specialItems.add(specialItem);
                 gamePanel.add(specialItem);
             }

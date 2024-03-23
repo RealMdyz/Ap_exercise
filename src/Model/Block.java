@@ -99,4 +99,10 @@ public class Block extends ObjectsInGame implements Moveable{
                 return Color.BLUE;
         }
     }
+    public void changeSize(int newWidth, int newHeight) {
+        this.setWidth(newWidth);
+        this.setHeight(newHeight);
+        setSize(newWidth, newHeight);
+        repaint(); // Repaint to reflect the new size
+    }
 }

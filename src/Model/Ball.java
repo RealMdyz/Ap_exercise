@@ -89,7 +89,7 @@ public class Ball extends ObjectsInGame implements Moveable{
             // Reverse x velocity when hitting side walls
             setxVelocity(-getxVelocity());
         }
-        if (getY() <= 10) { // Adjusted to consider the ball's height
+        else if (getY() <= 10) { // Adjusted to consider the ball's height
             // Reverse y velocity when hitting the top
             setyVelocity(-getyVelocity());
         }
