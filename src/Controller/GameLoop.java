@@ -47,18 +47,22 @@ public class GameLoop extends Thread{
         }
         if(!game.getGameFrame().onMove){
             if(!game.getGameFrame().addInThisState){
-                if(Joooon == 0)
+                if(Joooon <= 0){
                     game.getGameFrame().resetGame();
+                    Joooon = 1;
+                }
+
                 for (Block block : game.getGameFrame().getBlocks()) {
                     block.move();
-                    if(block.getY() >= 550)
+                    if(block.getY() >= 600)
                         Joooon -= 1;
                 }
                 for (SpecialItem specialItem : game.getGameFrame().getSpecialItems()) {
                     specialItem.move();
-                    if(specialItem.getY() >= 650 )
+                    if(specialItem.getY() >= 600 )
                         Joooon -= 1;
                 }
+              //  System.out.println(Joooon);
                 for(UsualItem itemBall : game.getGameFrame().getItemBalls()){
                     itemBall.move();
                 }
