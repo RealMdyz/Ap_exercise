@@ -123,64 +123,55 @@ public class GameLoop extends Thread{
                     }
                 }
                 j1 += 1;
-                int CountOfRemovedBlock = 0;
+                Block block2 = new Block(0, 0, -1);
                 for(Block block : game.getGameFrame().getBlocks()){
                     if(game.getIntersection().intersect(block, ball)){
                         block.reducePower();
                         if(System.currentTimeMillis() - startTime_For_Red < 15000 && block.Power > 0){
                             block.reducePower();
+                            game.getGameFrame().Point += 1;
                         }
                         game.getGameFrame().Point += 1;
                         game.getGameFrame(). pointsLabel.setText("Points: " + game.getGameFrame().Point);
                         if(block.Power == 0)
-                            CountOfRemovedBlock += 1;
+                            block2 = block;
                     }
 
                 }
+                if(block2.Power == 0)
+                    game.getGameFrame().removeBlock(block2);
 
-                for(int i = 0; i < CountOfRemovedBlock;  i++){
-                    Block block = new Block(0, 0, -1);
-                    for(Block block1 : game.getGameFrame().getBlocks()){
-                        if(block1.Power == 0){
-                            block = block1;
-                        }
-                    }
-                    if(block.Power == 0)
-                        game.getGameFrame().removeBlock(block);
-                }
+
 
                 if (ball.getyVelocity() != 0 || ball.getxVelocity() != 0)
                     CheckTheEnd = false;
-                int CountOfRemovedItemBall = 0;
+
                 for(UsualItem itemBall : game.getGameFrame().getItemBalls()){
                     if(game.getIntersection().intersect(itemBall, ball) && itemBall.Power == 1 && itemBall.COLOR.equals("yellow")){
                         itemBall.Power -= 1;
                         HowManyBallShouldAdd += 1;
-                        CountOfRemovedItemBall += 1;
                     }
                     else if(game.getIntersection().intersect(itemBall, ball) && itemBall.Power == 1 && itemBall.COLOR.equals("red")){
                         startTime_For_Red = System.currentTimeMillis();
                         itemBall.Power -= 1;
-                        CountOfRemovedItemBall += 1;
+
                     }
                     else if(game.getIntersection().intersect(itemBall, ball) && itemBall.Power == 1 && itemBall.COLOR.equals("green")){
                         startTime_For_Green = System.currentTimeMillis();
                         itemBall.Power -= 1;
-                        CountOfRemovedItemBall += 1;
                     }
                     else if(game.getIntersection().intersect(itemBall, ball) && itemBall.Power == 1 && itemBall.COLOR.equals("purple")){
                         BadAimLevel = game.getGameFrame().Level;
                         itemBall.Power -= 1;
-                        CountOfRemovedItemBall += 1;
+
                     }
                     else if(game.getIntersection().intersect(itemBall, ball) && itemBall.Power == 1 && itemBall.COLOR.equals("orange")){
                         itemBall.Power -= 1;
-                        CountOfRemovedItemBall += 1;
+
                         Joooon += 1;
                     }
                     else if(game.getIntersection().intersect(itemBall, ball) && itemBall.Power == 1 && itemBall.COLOR.equals("blue")){
                         itemBall.Power -= 1;
-                        CountOfRemovedItemBall += 1;
                         for (Block block : game.getGameFrame().getBlocks()) {
                             block.MoveBack();
                             block.MoveBack();
@@ -196,19 +187,19 @@ public class GameLoop extends Thread{
                     }
                 }
 
-                for(int i = 0; i < CountOfRemovedItemBall ;  i++){
-                    UsualItem itemBall = new UsualItem(0, 0, -2, "red");
+
+                    UsualItem itemBall2 = new UsualItem(0, 0, -2, "red");
                     for(UsualItem itemBall1 : game.getGameFrame().getItemBalls()){
                         if(itemBall1.Power == 0){
-                            itemBall = itemBall1;
+                            itemBall2 = itemBall1;
                         }
                     }
-                    if(itemBall.Power == 0){
-                        game.getGameFrame().removeItemBall(itemBall);
+                    if(itemBall2.Power == 0){
+                        game.getGameFrame().removeItemBall(itemBall2);
                     }
 
-                }
-                int CountOfRemovedSpecialItme = 0;
+
+                int CountOfRemovedBlock = 0;
                 for(SpecialItem specialItem : game.getGameFrame().getSpecialItems()){
                     if(game.getIntersection().intersect(specialItem, ball)){
                         specialItem.reducePower();
@@ -288,8 +279,11 @@ public class GameLoop extends Thread{
                                 ids =  (specialItem.getX() - block.getX()) * (specialItem.getX() - block.getX());
                                 ids += ((specialItem.getY() - block.getY()) * (specialItem.getY() - block.getY()));
                                 if(Math.sqrt(ids) <= 150){
-                                    for(int l = 0; l < 50 && block.Power > 0; l++)
+                                    for(int l = 0; l < 50 && block.Power > 0; l++){
+                                        game.getGameFrame().Point += 1;
                                         block.reducePower();
+                                    }
+
                                     if(block.Power == 0){
                                         CountOfRemovedBlock += 1;
                                     }
@@ -321,7 +315,7 @@ public class GameLoop extends Thread{
         }
         if(System.currentTimeMillis() - startTime_For_Green < 15000){
             try {
-                Thread.sleep(6);
+                Thread.sleep(4);
             }
             catch (Exception e){
 
@@ -329,7 +323,7 @@ public class GameLoop extends Thread{
         }
         else {
             try {
-                Thread.sleep(12);
+                Thread.sleep(8);
             }
             catch (Exception e){
 

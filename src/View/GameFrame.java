@@ -25,7 +25,7 @@ public class GameFrame extends JFrame {
     public boolean Aim = false;
     private final static int BallStartX = 270;
     private final static int BallStartY = 650;
-    private int AddOnMore = 25, AddItemBallLoop = 7;
+    private int AddOnMore = 25, AddItemBallLoop = 15;
     private Timer videoTimer;
     private Timer soundTimer;
 
@@ -40,6 +40,8 @@ public class GameFrame extends JFrame {
     public boolean addInThisState = false;
     public boolean Stop = false;
     public boolean Sound = false;
+    public boolean Saved = false;
+
     public int Level = 0;
     public int Point = 0;
     public JLabel pointsLabel;
@@ -200,37 +202,37 @@ public class GameFrame extends JFrame {
         int u = (int)(Math.random() * 5);
         int xFori = u * 100;
         ArrayList<Integer> A = new ArrayList<>();
-        if(Level % AddItemBallLoop == 0){
+        if(Level % AddItemBallLoop == 11){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "purple");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
             A.add(xFori);
         }
-        else if(Level % AddItemBallLoop == 1){
+        else if(Level % AddItemBallLoop == 2){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "red");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
             A.add(xFori);
         }
-        else if(Level % AddItemBallLoop == 2){
+        else if(Level % AddItemBallLoop == 7){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "green");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
             A.add(xFori);
         }
-        else if(Level % AddItemBallLoop == 4){
+        else if(Level % AddItemBallLoop == 1 || Level % AddItemBallLoop == 5){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "yellow");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
             A.add(xFori);
         }
-        else if(Level % AddItemBallLoop == 3){
+        else if(Level % AddItemBallLoop == 9){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "orange");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
             A.add(xFori);
         }
-        else if(Level % AddItemBallLoop == 5){
+        else if(Level % AddItemBallLoop == 14){
             UsualItem itemBall = new UsualItem(xFori, 0, 1, "blue");
             gamePanel.add(itemBall);
             itemBalls.add(itemBall);
@@ -248,12 +250,12 @@ public class GameFrame extends JFrame {
             if(A.contains(x))
                 continue;
             A.add(x);
-            if(Level % 10 == 1 && i == 0){
+            if(Level % AddItemBallLoop == 1 && (int)(Level / AddItemBallLoop) % 2 == 0 && i == 0){
                 SpecialItem specialItem = new SpecialItem(x, 0, Level, "red");
                 specialItems.add(specialItem);
                 gamePanel.add(specialItem);
             }
-            else if(Level % 10 == 5 && i == 0){
+            else if(Level % AddItemBallLoop == 5 && (int)(Level / AddItemBallLoop) % 2 == 0 && i == 0){
                 SpecialItem specialItem = new SpecialItem(x, 0, Level, "purple");
                 specialItems.add(specialItem);
                 gamePanel.add(specialItem);
@@ -293,7 +295,8 @@ public class GameFrame extends JFrame {
         gamePanel.repaint();
     }
     public void resetGame() {
-        addToHistory(PlayerName, Point);
+        if(Saved)
+             addToHistory(PlayerName, Point);
         for(Block block : blocks)
             gamePanel.remove(block);
         for(Ball ball1 : balls)
@@ -421,15 +424,16 @@ public class GameFrame extends JFrame {
             Color = (String) colorComboBox.getSelectedItem(); // Get the selected color name
             if (easyButton.isSelected()) {
                 // Start game with easy level
-                AddItemBallLoop = 7;
-                AddOnMore = 25;
-            } else if (normalButton.isSelected()) {
+                AddItemBallLoop = 15;
+                AddOnMore = 20;
+            }
+            else if (normalButton.isSelected()) {
                 // Start game with normal level
-                AddItemBallLoop = 10;
+                AddItemBallLoop = 20;
                 AddOnMore = 15;
             } else if (hardButton.isSelected()) {
                 // Start game with hard level
-                AddItemBallLoop = 20;
+                AddItemBallLoop = 25;
                 AddOnMore = 5;
             }
         }
@@ -479,9 +483,9 @@ public class GameFrame extends JFrame {
 
             // Handle save game option
             if (saveCheckBox.isSelected()) {
-                System.out.println("Save Game");
+                Saved = true;
             } else {
-                System.out.println("Do not save game");
+               Saved = false;
             }
         }
     }
