@@ -309,25 +309,18 @@ public class GameLoop extends Thread{
                         }
                         else if(specialItem1.Power == 0 && specialItem1.COLOR.equals("yellow")){
                             specialItem = specialItem1;
-                            long StartOfTheTime = System.currentTimeMillis();
-                            int x = 100;
-                            while (System.currentTimeMillis() - StartOfTheTime < 10000){
-                                for (Block block : game.getGameFrame().getBlocks())
-                                    block.changeSize(x, 50);
-                                try {
-                                    Thread.sleep(100);
-                                }
-                                catch (Exception e){}
-                                x -= 1;
-                            }
+                            for(int i123 = 0; i123  < 5; i123 += 1)
+                                Cng(1000 * (2 & i) + System.currentTimeMillis());
                             for (Block block : game.getGameFrame().getBlocks()){
                                 block.changeSize(100, 50);
                             }
-
+                            for (UsualItem block : game.getGameFrame().getItemBalls())
+                                block.changeSize(50, 50);
                         }
                     }
                     if(specialItem.Power == 0)
                         game.getGameFrame().RemoveSpecialItem(specialItem);
+
                 }
 
             }
@@ -373,5 +366,38 @@ public class GameLoop extends Thread{
     }
     private void explode(int x, int y) {
         game.getGameFrame().playSound();
+    }
+
+
+    private void Cng(long StartOfTheTime){
+        int x = 100;
+        int u = 50;
+        int m = 60;
+        while (System.currentTimeMillis() - StartOfTheTime < 1000){
+            for (Block block : game.getGameFrame().getBlocks())
+                block.changeSize(x, m);
+            for (UsualItem block : game.getGameFrame().getItemBalls())
+                block.changeSize(u, u);
+            try {
+                Thread.sleep(10);
+            }
+            catch (Exception e){}
+            x -= 1;
+            u -= 1;
+            m -= 2;
+        }
+        while (System.currentTimeMillis() - StartOfTheTime < 2000){
+            for (Block block : game.getGameFrame().getBlocks())
+                block.changeSize(x, m);
+            for (UsualItem block : game.getGameFrame().getItemBalls())
+                block.changeSize(u, u);
+            try {
+                Thread.sleep(10);
+            }
+            catch (Exception e){}
+            x += 1;
+            u += 1;
+            m += 2;
+        }
     }
 }

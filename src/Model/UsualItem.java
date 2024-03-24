@@ -22,6 +22,12 @@ public class UsualItem extends ObjectsInGame implements Moveable{
         this.setY(this.getY() - yVelocity);
         this.repaint();
     }
+    public void changeSize(int newWidth, int newHeight) {
+        this.setWidth(newWidth);
+        this.setHeight(newHeight);
+        setSize(newWidth, newHeight);
+        repaint(); // Repaint to reflect the new size
+    }
 
     @Override
     public void paintComponent(Graphics g) {

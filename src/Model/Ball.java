@@ -19,7 +19,7 @@ public class Ball extends ObjectsInGame implements Moveable{
 
     public int Power = 1;
     private long LastMoveTime = 0;
-    private final int Zarib = 10;
+    private final int Zarib = 12;
 
 
     public Ball(int x, int y){
